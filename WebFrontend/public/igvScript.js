@@ -2,7 +2,8 @@
 let igvMade = 0
 let currentBrowser
 let currentTrack 
-
+let igvDivDiv = document.getElementById("igv-div-div")
+let igvDiv = document.getElementById("igv-div");
 
 async function makeIGV(igvDiv) { /* 
     let seqURL = await axios.post("http://localhost:7000/api/getfile")
@@ -50,8 +51,7 @@ setInterval(() => {
         prevUrl = currURL
         if (window.location.href.split('/').pop() == 'dashboard') { // last element in array is dashboard it is the correct page
 
-            var igvDiv = document.getElementById("igv-div");
-            igvDiv.style.zIndex = 1
+            igvDivDiv.style.zIndex = 1
             if (igvMade == 0) {
                 makeIGV(igvDiv)
             }
@@ -97,8 +97,7 @@ setInterval(() => {
 
 
         } else {
-            let igvDiv = document.getElementById("igv-div");
-            igvDiv.style.zIndex = -1
+            igvDivDiv.style.zIndex = -1
         }
     }
 }, 1)
