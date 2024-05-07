@@ -20,9 +20,9 @@ CREATE TABLE "User_sequences" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     label TEXT NOT NULL,
-    igv bit(1) DEFAULT 0 NOT NULL,
-    optitype bit(1) DEFAULT 0 NOT NULL,
-    hisatgenotype bit(1) DEFAULT 0 NOT NULL,
-    hlala bit(1) DEFAULT 0 NOT NULL,
+    hla_la TEXT DEFAULT NULL,
+    optitype TEXT DEFAULT NULL,
+    hisat_genotype TEXT DEFAULT NULL,
+    snp_bridge TEXT DEFAULT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );

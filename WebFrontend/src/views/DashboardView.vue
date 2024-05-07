@@ -6,9 +6,41 @@ import axios from "axios";
 
 const accountName = ref();
 const sequenceDropdown = ref([]);
+const currentSequence = ref("");
+const typingResults = ref({
+  hla_la: ["", "", "", ""],
+  optitype: ["", "", "", ""],
+  hisat_genotype: ["", "", "", ""],
+  snp_bridge: ["", "", "", ""],
+});
+
 getAccountInfo().then((name) => {
   accountName.value = name;
 });
+
+function generateList(n) {
+  return Array.from({ length: n }, (_, index) => index + 1);
+}
+
+function longestListLength(dict) {
+  // chatgpt babyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+  let longestLength = 0;
+  let longestListValue = 0;
+
+  // Iterate through each key-value pair in the dictionary
+  for (let key in dict) {
+    if (dict.hasOwnProperty(key)) {
+      let value = dict[key];
+      // Check if the current value is a list and its length is greater than the longest length found so far
+      if (Array.isArray(value) && value.length > longestLength) {
+        longestLength = value.length;
+        longestListValue = value;
+      }
+    }
+  }
+
+  return Math.floor(longestListValue.length);
+}
 
 async function addToSequenceList() {
   let serverData = await getSequences();
@@ -18,8 +50,45 @@ async function addToSequenceList() {
   console.log(sequenceDropdown.value);
 }
 
-addToSequenceList();
+function runTool(toolName) {
+  console.log(currentSequence.value);
+  console.log(`running ${toolName}`);
+  /*
+  axios.post("http://localhost:7000/api/runTool",{session_cookie: Cookies.get('session_cookie'), label:currentSequence.value, tool_name:toolName})
+  .then( response =>{
+    alert("Started running "+ toolName)
+  })
+  .catch( err =>{
+    alert(err.message)
+  })
+  */
+}
 
+async function getTypingResults() {
+  console.log(currentSequence.value);
+  let response = await axios
+    .post("http://localhost:7000/api/getTypingResults", {
+      session_cookie: Cookies.get("session_cookie"),
+      label: currentSequence.value,
+    })
+    .catch((err) => {
+      alert(err.message);
+      console.error(err);
+    });
+  console.log(response.data);
+  for (let toolName in response.data) {
+    typingResults.value[toolName] = [];
+    for (let i = 0; i < response.data[toolName]["alleles"].length; i++) {
+      typingResults.value[toolName].push(response.data[toolName]["alleles"][i]);
+    }
+    for (let i = 0; i < response.data[toolName]["adr"].length; i++) {
+      typingResults.value[toolName].push(response.data[toolName]["adr"][i].toString() || 'Not in database');
+    }
+  }
+}
+
+
+addToSequenceList();
 </script>
 
 <template>
@@ -38,7 +107,13 @@ addToSequenceList();
   </div>
 
   <div class="dropdownDiv">
-    <select name="sequences" id="sequences" class="dropdown">
+    <select
+      name="sequences"
+      id="sequences"
+      class="dropdown"
+      v-model="currentSequence"
+      @change="getTypingResults()"
+    >
       <option value="" disabled selected>Select a sequence</option>
       <option v-for="i in sequenceDropdown" :key="i" :value="i.value">
         {{ i.value }}
@@ -61,82 +136,146 @@ addToSequenceList();
     />
   </div>
 
-  <button class="igvButton" id="visualizeIGV">View</button>
-
-
+  <button class="igvButton" id="visualizeIGV" >
+    View
+  </button>
 
   <h2 class="tableHeader">Typing results</h2>
-
-  <table class="container">
+  <div class="tableDiv">
+    <table class="container" :style="{'min-width': longestListLength(typingResults) * 300 + 300 + 'px'}">
     <thead>
       <tr>
         <th>Tools</th>
-        <th>Gene 1</th>
-        <th>ADR 1</th>
-        <th>Gene 2</th>
-        <th>ADR 2</th>
+        <th
+          v-for="(_, index) in generateList(longestListLength(typingResults)/2)"
+          :key="index"
+          :value="'Gene ' + String(index + 1)"
+        >
+          {{ "Gene " + String(index + 1) }}
+        </th>
+        <th
+          v-for="(_, index) in generateList(longestListLength(typingResults)/2)"
+          :key="index"
+          :value="'ADR ' + String(index + 1)"
+        >
+          {{ "ADR " + String(index + 1) }}
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><a href="https://github.com/DiltheyLab/HLA-LA">HLA-LA</a></td>
-        <td>A*11:01:01G</td>
-        <td>6369</td>
-        <td>A*11:01:01G</td>
-        <td>01:32:50</td>
+        <td>
+          <a href="https://github.com/DiltheyLab/HLA-LA">HLA-LA</a>
+          <button class="toolActivateButton" @click="runTool('hla_la')">
+            Run
+          </button>
+        </td>
+        <td v-for="data in typingResults['hla_la']" :key="data" :value="data">
+          {{ data || "-" }}
+        </td>
       </tr>
       <tr>
-        <td><a href="https://github.com/FRED-2/OptiType/">Optitype</a></td>
-        <td>9518</td>
-        <td>6369</td>
-        <td>01:32:50</td>
-        <td>01:32:50</td>
+        <td>
+          <a href="https://github.com/FRED-2/OptiType/">Optitype</a>
+          <button class="toolActivateButton" @click="runTool('optitype')">
+            Run
+          </button>
+        </td>
+        <td v-for="data in typingResults['optitype']" :key="data" :value="data">
+          {{ data || "-" }}
+        </td>
       </tr>
       <tr>
-        <td><a href="https://github.com/DaehwanKimLab/hisat-genotype">HISAT-genotype</a></td>
-        <td>9518</td>
-        <td>6369</td>
-        <td>01:32:50</td>
-        <td>01:32:50</td>
+        <td>
+          <a href="https://github.com/DaehwanKimLab/hisat-genotype"
+            >HISAT-genotype</a
+          >
+          <button class="toolActivateButton" @click="runTool('hisat_genotype')">
+            Run
+          </button>
+        </td>
+        <td v-for="data in typingResults['hisat_genotype']" :key="data" :value="data">
+          {{ data || "-" }}
+        </td>
       </tr>
       <tr>
-        <td><a href="">HLA Type Bridging</a></td>
-        <td>9518</td>
-        <td>6369</td>
-        <td>01:32:50</td>
-        <td>01:32:50</td>
+        <td>
+          <a href="https://github.com/theme222/SNP-Bridge">SNP-Bridge</a>
+          <button class="toolActivateButton" @click="runTool('snp_bridge')">
+            Run
+          </button>
+        </td>
+        <td v-for="data in typingResults['snp_bridge']" :key="data" :value="data">
+          {{ data || "-" }}
+        </td>
       </tr>
     </tbody>
   </table>
+  </div>
+  
 
-  <div style="position: absolute; top: 100%; height: 7%; width: 20%;"></div>
+  <div style="position: absolute; top: 100%; height: 7%; width: 20%"></div>
 </template>
 
 <style>
+.toolActivateButton {
+  position: absolute;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  left: 250px;
+  height: 15%;
+  border-radius: 3px;
+  padding: 12px 24px;
+  text-align: center;
+  border: 0;
+  color: #3a4149;
+  background: #ebebeb;
+  line-height: 1.15;
+  font-size: 1em;
+  transform: translate(-50%, -35%);
+  width: 90px;
+}
 
-.tableHeader{
+.toolActivateButton:hover {
+  transition: all 0.1s ease;
+  box-shadow: 0 0 0 0 #fff, 0 0 0 3px #6a66a3;
+}
+
+.tableHeader {
   font-family: Arial, Helvetica, sans-serif;
   position: absolute;
-  color:black;
+  color: black;
   font-size: 2em;
   top: 65%;
   left: 50%;
   transform: translate(-50%);
 }
 
+.tableDiv{
+  position: absolute;
+  left: 50%;
+  top: 87%;
+  transform: translate(-50%, -50%);
+  width: 99%;
+  height: 29%;
+  margin: auto;
+  overflow: auto;
+}
+
 .container {
   font-family: Arial, Helvetica, sans-serif;
   text-align: left;
-  overflow: hidden;
-  width: 97%;
+  margin: auto;
+  overflow: auto;
+  border-collapse: separate;
+  width: 100%;
   display: table;
-  height: 29.9%;
+  height: 100%;
   position: absolute;
   background: #36382e;
   color: white;
-  left: 50%;
-  top: 90%;
-  transform: translate(-50%, -50%);
   border-radius: 5px;
 }
 
@@ -155,20 +294,20 @@ addToSequenceList();
   background-color: #337357;
 }
 
-.container tr td{
-  padding-left: 2%;
+.container tr td {
+  padding-left: 20px;
+  width: 300px;
 }
 
-.container tr td a{
-  text-decoration: underline ;
+.container tr td a {
+  text-decoration: underline;
   font-weight: 900;
 }
 
-.container tr td:hover{
+.container tr td:hover {
   transition-duration: 0.4s;
   background-color: #36382e;
 }
-
 
 .igvButton {
   position: absolute;
@@ -178,7 +317,7 @@ addToSequenceList();
   outline: none;
   cursor: pointer;
   font-weight: 600;
-  height: 3.9%;
+  height: 51px;
   border-radius: 3px;
   padding: 12px 24px;
   border: 0;
@@ -222,11 +361,11 @@ addToSequenceList();
 .igvDivDivlol {
   position: absolute;
   width: 99.4%;
-  height: 32%; 
-  top:39%;
-  left: 50%; 
-  transform: translate(-50%,-50%);
-  
+  height: 32%;
+  top: 39%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   background: white;
 
   box-shadow: 0 0 0 0 #fff, 0 0 0 5px #6a66a3;

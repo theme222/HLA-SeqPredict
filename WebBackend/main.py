@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from TechnicalToolsV2 import log, sha256
-from file_handler import transform_file_for_igv, connect, disconnect, get_range_of_bam_file
+from file_handler import transform_file_for_igv, connect, disconnect, get_range_of_bam_file, get_adr
 from time import time, sleep
 import secrets
 import sqlite3
@@ -12,6 +12,7 @@ import re
 DATABASE_NAME = "users.db"  # go change in file_handler.py as well
 SESSION_DURATION = 1000000  # Seconds
 CURRENT_FILE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+TYPING_TOOLS = ['hla_la', 'optitype', 'hisat_genotype', 'snp_bridge']
 SINGLE_USE_TOKENS = {}  # token used for downloading user data from server
 app = Flask(__name__)
 CORS(app)
@@ -152,8 +153,9 @@ def api_get_sequences():
 
     user_id, name, email = info
     connection, cursor = connect()
-    cursor.execute("SELECT user_id,label,igv,optitype,hisatgenotype,hlala FROM User_sequences WHERE user_id = ?",
-                   (user_id,))
+    cursor.execute(
+        "SELECT user_id,label,optitype,hisat_genotype,hla_la,snp_bridge FROM User_sequences WHERE user_id = ?",
+        (user_id,))
 
     return jsonify({"list": cursor.fetchall()})
 
@@ -209,6 +211,7 @@ def api_request_file():
     sequence_label = request.json["label"]
     cookie = request.json['session_cookie']
 
+    log("Requesting file with label", var=sequence_label, logtitle='POST REQUEST', color='yellow')
     # get user_id
     info = get_account_info_from_db(cookie)
 
@@ -225,7 +228,7 @@ def api_request_file():
 
     if not os.path.isfile(directory + "/" + sequence_label + '.bam') or not os.path.isfile(
             directory + "/" + sequence_label + '.bam.bai'):
-        return "File isn't ready for view yet", 400
+        return "File isn't ready for view yet", 504
 
     # creating tokens for the two files requested (.bam, .bam.bai)
     token_bam = secrets.token_urlsafe(16)
@@ -240,6 +243,45 @@ def api_request_file():
     return jsonify({"token_bam": token_bam,
                     "token_bam_bai": token_bam_bai,
                     "range": get_range_of_bam_file(directory + "/" + sequence_label + ".bam")})
+
+
+@app.route('/api/getTypingResults', methods=['POST'])
+def api_get_typing_results():
+    sequence_label = request.json["label"]
+    cookie = request.json['session_cookie']
+
+    log("Requesting typing results with label :", var=sequence_label, logtitle='POST REQUEST', color='yellow')
+
+    # get user_id
+    info = get_account_info_from_db(cookie)
+
+    if not info:
+        log("Invalid cookie", logtitle='error', color='red')
+        return "Invalid session cookie", 401
+
+    user_id, name, email = info
+
+    connection, cursor = connect()
+    cursor.execute('SELECT hla_la,optitype,hisat_genotype,snp_bridge FROM User_sequences WHERE user_id=? AND label=?',
+                   (user_id, sequence_label))
+
+    typing_results = cursor.fetchone()
+    return_dict = {}
+    disconnect(connection, cursor)
+
+    for index, tool_result in enumerate(typing_results):
+
+        # get the adr for each type found
+        if tool_result is None:
+            return_dict[TYPING_TOOLS[index]] = {"alleles": [], "adr": []}
+        else:
+            alleles = tool_result.split(',')
+            adr_list = []
+            for allele in alleles:
+                adr_list.append(get_adr(allele))
+            return_dict[TYPING_TOOLS[index]] = {"alleles": alleles, "adr": adr_list}
+
+    return jsonify(return_dict)
 
 
 @app.route('/download/<token>')
