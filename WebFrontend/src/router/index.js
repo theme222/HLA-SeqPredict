@@ -5,6 +5,7 @@ import home from '../views/HomeView.vue'
 import signup from '../views/SignupView.vue'
 import upload from '../views/UploadView.vue'
 import dashboard from '../views/DashboardView.vue'
+import profile from '../views/ProfileView.vue'
 import RedirectToHomePlz from '@/scripts/RedirectToHomePlz.vue'
 
 const routes = [
@@ -13,7 +14,8 @@ const routes = [
   {path : '/login', name: 'login', component: login},
   {path : '/signup', name: 'signup', component: signup},
   {path : '/upload', name: 'upload', component: upload},
-  {path : '/dashboard', name: 'dashboard', component: dashboard}
+  {path : '/dashboard', name: 'dashboard', component: dashboard},
+  {path : '/profile', name: 'profile', component: profile}
 ]
 
 const router = createRouter({

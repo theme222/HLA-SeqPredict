@@ -1,43 +1,9 @@
 <script setup>
 /* eslint-disable */
-let func = "This is so that autocomplete doesn't do some bullshit";
-import { ref } from "vue";
-import { reactive } from "vue";
-import axios from "axios";
-import Cookies from "js-cookie";
-import { useRouter, useRoute } from "vue-router";
-import { getAccountInfo } from "@/scripts/AccountFunc";
 
-const router = useRouter();
-const route = useRoute();
-
-// Hash function
-import { sha256 } from "js-sha256";
-
-function sendToLogin() {
-  router.push({ name: "login" });
-}
-
-function sendToSignup() {
-  router.push({ name: "signup" });
-}
-
-const accountName = ref(null);
-getAccountInfo().then((name) => {
-  accountName.value = name;
-});
 </script>
 
 <template>
-  <div class="background"></div>
-
-  <div class="titleWrapper">
-    <h1 class="titleText">
-      <RouterLink to="home">HLA-ADR Prediction</RouterLink>
-    </h1>
-
-    <div class="accountName">{{ accountName || "No account" }}</div>
-  </div>
 
   <h1 class="heading">
     A prediction of adverse drug reactions through processing genotype
@@ -99,34 +65,7 @@ getAccountInfo().then((name) => {
   font-size: 1.5em;
 }
 
-.background {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  padding: 100%;
-  background-color: #ebebeb;
-}
 
-.titleWrapper {
-  z-index: 983458934509834598;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  height: 40px;
-  background: #ff6700;
-  width: 100%;
-  padding-top: 1.5%;
-  padding-bottom: 1%;
-}
-
-.titleText {
-  font-family: Arial, Helvetica, sans-serif;
-  position: absolute;
-  display: inline;
-  color: white;
-  font-weight: 800;
-  transform: translate(0, -50%);
-}
 
 .loginLink {
   position: inherit;

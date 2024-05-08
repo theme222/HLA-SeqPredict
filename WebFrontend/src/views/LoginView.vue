@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useRouter, useRoute } from 'vue-router'
+import { backendLink } from '@/scripts/AccountFunc'
 
 const router = useRouter()
 const route = useRoute()
@@ -26,7 +27,7 @@ function GetExpirationDate(duration){
 }
 
 function sendLoginData(){
-  axios.post('http://localhost:7000/api/login', {email : formData.value.email, password : sha256(formData.value.password)})
+  axios.post(backendLink+'/api/login', {email : formData.value.email, password : sha256(formData.value.password)})
     .then(response => {
       if (response.data["success"]){
         formCheck.value = true
@@ -48,15 +49,6 @@ function sendLoginData(){
 
 <template>
 
-  <div class="background"></div>
-
-  <div class="titleWrapper">
-      
-      <h1 class="titleText">
-        <RouterLink to="home">HLA-ADR Prediction</RouterLink>
-      </h1>
-      
-  </div>
   
     <h2 class="loginHeading">
       Login

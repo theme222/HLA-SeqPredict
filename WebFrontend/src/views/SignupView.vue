@@ -5,6 +5,7 @@ import { ref } from "vue";
 import { reactive } from "vue";
 import axios from "axios";
 import { useRouter, useRoute } from "vue-router";
+import { backendLink } from "@/scripts/AccountFunc";
 
 const router = useRouter();
 const route = useRoute();
@@ -41,7 +42,7 @@ function checkValidEmail() {
   } else {
     formCheck.value.email = 1;
     axios
-      .post("http://localhost:7000/api/checkEmail", {
+      .post(backendLink+"/api/checkEmail", {
         email: formData.value.email,
       })
       .then((response) => {
@@ -77,7 +78,7 @@ function allOfTheAbove() {
   }
   if (a == 4) {
     axios
-      .post("http://localhost:7000/api/signup", {
+      .post(backendLink+"/api/signup", {
         name: formData.value.name,
         email: formData.value.email,
         password: sha256(formData.value.password),
@@ -94,13 +95,7 @@ function allOfTheAbove() {
 </script>
 
 <template>
-  <div class="background"></div>
 
-  <div class="titleWrapper">
-    <h1 class="titleText">
-      <RouterLink to="home">HLA-ADR Prediction</RouterLink>
-    </h1>
-  </div>
 
   <h2 class="signupHeading">Create an account</h2>
 

@@ -5,7 +5,7 @@ import { reactive } from 'vue'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useRouter, useRoute } from 'vue-router'
-import { getAccountInfo } from '@/scripts/AccountFunc'
+import { backendLink } from '@/scripts/AccountFunc'
 
 const router = useRouter()
 const route = useRoute()
@@ -47,10 +47,10 @@ function uploadFile(){
       return 0
     }
     const formData = new FormData()
-    let filenameToSet  = String(Date.now()/1000)
+    let filenameToSet  = String(Math.floor(Date.now()/1000))
     if (labelValue.value !== "") {filenameToSet = labelValue.value}
     formData.append('file', document.getElementById('file').files[0], filenameToSet)
-    axios.post("http://localhost:7000/api/uploadFile", 
+    axios.post(backendLink+"/api/uploadFile", 
               formData, 
               {headers: {"Content-Type" : 'multipart/form-data', 
                         'Authorization': `Bearer ${Cookies.get('session_cookie')}`} })
@@ -64,24 +64,10 @@ function uploadFile(){
     });
   }
 
-
-getAccountInfo().then(name => {accountName.value = name})
 </script>
 
 <template>
 
-  <div class="background"></div>
-
-  <div class="titleWrapper">
-      
-      <h1 class="titleText">
-          <RouterLink to="home">HLA-ADR Prediction</RouterLink>
-      </h1>
-      
-      <label class="accountName">{{accountName || "No account"}}</label>
-
-      
-  </div>
   
   <div class="headingWrapper">
       <h2 class="heading">
@@ -127,30 +113,6 @@ a:active {
   text-decoration: none;
 }
 
-.background{
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  padding: 100%;
-  background-color: #EBEBEB;
-}
-
-.titleWrapper{
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    background: #FF6700 ;
-    width: 100%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-}
-
-.titleText{
-    display: inline;
-    padding-left: 1%;
-    color: white;
-    font-weight: 800;
-}
 
 .accountName {
   position: inherit;

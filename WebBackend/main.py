@@ -13,6 +13,7 @@ DATABASE_NAME = "users.db"  # go change in file_handler.py as well
 SESSION_DURATION = 1000000  # Seconds
 CURRENT_FILE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 TYPING_TOOLS = ['hla_la', 'optitype', 'hisat_genotype', 'snp_bridge']
+ASSOCIATED_FILETYPES = ['.bam', '.bam.bai', '.fq', '.sam']
 SINGLE_USE_TOKENS = {}  # token used for downloading user data from server
 app = Flask(__name__)
 CORS(app)
@@ -282,6 +283,35 @@ def api_get_typing_results():
             return_dict[TYPING_TOOLS[index]] = {"alleles": alleles, "adr": adr_list}
 
     return jsonify(return_dict)
+
+
+@app.route('/api/deleteSequence', methods=['POST'])
+def api_delete_sequence():
+    sequence_label = request.json["label"]
+    cookie = request.json['session_cookie']
+    log(f"Receiving delete sequence request with label :", var=sequence_label, logtitle="post request", color='yellow')
+
+    # get user_id
+    info = get_account_info_from_db(cookie)
+
+    if not info:
+        log("Invalid cookie", logtitle='error', color='red')
+        return "Invalid session cookie", 401
+
+    user_id, name, email = info
+
+    connection, cursor = connect()
+    cursor.execute("DELETE FROM User_sequences WHERE user_id=? AND label=?", (user_id, sequence_label))
+    disconnect(connection, cursor)
+
+    files_to_delete = [sequence_label + filetype for filetype in ASSOCIATED_FILETYPES]
+    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}"
+
+    for file in os.listdir(directory):
+        if file in files_to_delete:
+            os.remove(f'{directory}/{file}')
+            log("Removed file", var=file, logtitle="DELETE", color="red")
+    return "Successfully removed file(s)", 200
 
 
 @app.route('/download/<token>')

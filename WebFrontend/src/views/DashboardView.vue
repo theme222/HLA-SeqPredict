@@ -1,10 +1,10 @@
 <script setup>
 /* eslint-disable */
-import { getAccountInfo, getSequences } from "@/scripts/AccountFunc";
+import { getAccountInfo, getSequences, backendLink} from "@/scripts/AccountFunc";
 import { ref } from "vue";
 import axios from "axios";
 
-const accountName = ref();
+
 const sequenceDropdown = ref([]);
 const currentSequence = ref("");
 const typingResults = ref({
@@ -14,9 +14,7 @@ const typingResults = ref({
   snp_bridge: ["", "", "", ""],
 });
 
-getAccountInfo().then((name) => {
-  accountName.value = name;
-});
+
 
 function generateList(n) {
   return Array.from({ length: n }, (_, index) => index + 1);
@@ -54,7 +52,7 @@ function runTool(toolName) {
   console.log(currentSequence.value);
   console.log(`running ${toolName}`);
   /*
-  axios.post("http://localhost:7000/api/runTool",{session_cookie: Cookies.get('session_cookie'), label:currentSequence.value, tool_name:toolName})
+  axios.post(backendLink+"/api/runTool",{session_cookie: Cookies.get('session_cookie'), label:currentSequence.value, tool_name:toolName})
   .then( response =>{
     alert("Started running "+ toolName)
   })
@@ -67,7 +65,7 @@ function runTool(toolName) {
 async function getTypingResults() {
   console.log(currentSequence.value);
   let response = await axios
-    .post("http://localhost:7000/api/getTypingResults", {
+    .post(backendLink+"/api/getTypingResults", {
       session_cookie: Cookies.get("session_cookie"),
       label: currentSequence.value,
     })
@@ -92,15 +90,7 @@ addToSequenceList();
 </script>
 
 <template>
-  <div class="background"></div>
 
-  <div class="titleWrapper">
-    <h1 class="titleText">
-      <RouterLink to="home">HLA-ADR Prediction</RouterLink>
-    </h1>
-
-    <div class="accountName">{{ accountName || "No account" }}</div>
-  </div>
 
   <div class="dashboardHeadingWrapper">
     <h2 class="dashboardHeading">Dashboard</h2>
