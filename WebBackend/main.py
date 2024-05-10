@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from TechnicalToolsV2 import log, sha256
-from file_handler import transform_file_for_igv, connect, disconnect, get_range_of_bam_file, get_adr
+from file_handler import transform_file_for_igv, connect, disconnect, get_range_of_bam_file, get_adr, run
 from time import time, sleep
 import secrets
+import shutil
 import sqlite3
 import os
 import threading
@@ -11,7 +12,7 @@ import re
 
 DATABASE_NAME = "users.db"  # go change in file_handler.py as well
 SESSION_DURATION = 1000000  # Seconds
-CURRENT_FILE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+CURRENT_FILE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))  # home/sirat/Code/ADR-Prediction/WebBackend/
 TYPING_TOOLS = ['hla_la', 'optitype', 'hisat_genotype', 'snp_bridge']
 ASSOCIATED_FILETYPES = ['.bam', '.bam.bai', '.fq', '.sam']
 SINGLE_USE_TOKENS = {}  # token used for downloading user data from server
@@ -30,7 +31,7 @@ def remove_token(token):
 def check_valid_filename(name):
     max_size = 100
     char_list = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', "'", '"', '<', '>', '/', '?', '[', ']', '|', ',',
-                 '|', '\\', '-', '=', ':', '{', '}', '`', '~']
+                 '|', '\\', '-', '=', ':', '{', '}', '`', '~', ' ']
     pattern = re.compile('[' + re.escape(''.join(char_list)) + ']')
 
     # Check if the filename contains any character from the list
@@ -183,27 +184,35 @@ def api_upload_file():
 
     user_id, name, email = info
 
+    # Make parent directory with user_id
     directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}"
 
     if not os.path.exists(directory):
         os.makedirs(directory)
         log(f"Directory '{directory}' created.")
 
-    filename = file.filename
-
-    # make sure it doesn't override itself
+    filename = file.filename  # sequence label
+    # make sure it doesnt contain random symbol stuff
     if not check_valid_filename(filename):
         return "Do not use symbols in the label", 400
-    while os.path.isfile(f'{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/' + filename + '.fq'):
+
+    # Make sequence directory with label
+
+    # make sure it doesn't override itself
+    while os.path.exists(f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/{filename}"):
         filename += f'_{secrets.token_hex(1)}'
 
+    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/{filename}"
+    os.makedirs(directory)
+    log(f"Directory '{directory}' created.")
+
     # Save the uploaded file to a designated location
-    file.save(f'{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/' + filename + '.fq')
+    file.save(f'{directory}/' + filename + '.fq')
 
     connection, cursor = connect()
     cursor.execute("INSERT INTO User_sequences (user_id,label) VALUES (?,?)", (user_id, filename))
     disconnect(connection, cursor)
-    threading.Thread(target=transform_file_for_igv, args=(directory, filename, user_id)).start()
+    threading.Thread(target=transform_file_for_igv, args=(directory, filename)).start()
     return 'File uploaded successfully', 200
 
 
@@ -221,7 +230,7 @@ def api_request_file():
         return "Invalid session cookie", 401
 
     user_id, name, email = info
-    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}"
+    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/{sequence_label}"
 
     if not os.path.exists(directory):
         log("Path doesn't exist", logtitle="error", color='red')
@@ -300,17 +309,13 @@ def api_delete_sequence():
 
     user_id, name, email = info
 
+    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/{sequence_label}"
+    shutil.rmtree(directory)
+    log("Removed directory :", var=directory, logtitle="DELETE", color="red")
+
     connection, cursor = connect()
     cursor.execute("DELETE FROM User_sequences WHERE user_id=? AND label=?", (user_id, sequence_label))
     disconnect(connection, cursor)
-
-    files_to_delete = [sequence_label + filetype for filetype in ASSOCIATED_FILETYPES]
-    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}"
-
-    for file in os.listdir(directory):
-        if file in files_to_delete:
-            os.remove(f'{directory}/{file}')
-            log("Removed file", var=file, logtitle="DELETE", color="red")
     return "Successfully removed file(s)", 200
 
 

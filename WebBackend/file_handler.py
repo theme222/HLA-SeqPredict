@@ -23,7 +23,7 @@ def run(command):
     os.system(command)
 
 
-def transform_file_for_igv(directory, filename, user_id):
+def transform_file_for_igv(directory, filename):
     run(f"bwa mem references/chr6.fa '{directory}/{filename}.fq' > '{directory}/{filename}.sam'")
     run(f"samtools sort '{directory}/{filename}.sam' > '{directory}/{filename}.bam'")
     run(f"samtools index '{directory}/{filename}.bam'")

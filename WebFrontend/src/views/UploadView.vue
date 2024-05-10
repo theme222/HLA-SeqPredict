@@ -59,7 +59,7 @@ function uploadFile(){
       router.push({name:'dashboard'})
     })
     .catch(error => {
-      alert("Please use alpha numeric charectors and _ only")
+      alert("Please use alpha numeric characters and _ only")
       console.error('Error uploading file  :', error);
     });
   }
@@ -84,7 +84,7 @@ function uploadFile(){
     <input maxlength="100" type="text" id="name" class="box" v-model="labelValue" style="position: absolute; top: 75%; left: 50%; transform: translate(-50%,-50%);" v-if="validLabel" placeholder="Input sequece label / identifier (please don't sql inject)" @change="checkValidLabel">        
     <div v-else style="color: red; font-size: 0.9em; position: absolute; top: 75%; left: 50%; transform: translate(-50%,-50%);" >
         <input maxlength="100" type="password" id="password" class="youDidSomethingBadBox" v-model="formData.password" required placeholder="Password" @change="checkValidLabel"> 
-        Password should be atleast 6 characters
+        Please use alphanumeric characters and _ only
     </div>
     <div><button class="uploadSubmitButton" @click="uploadFile">Submit</button></div>
   </div>
