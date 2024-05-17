@@ -1,24 +1,6 @@
-# vuempaproject
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Front end website made with vue composition API
+## info
+This is a frontend website made using the Vue composition API. It is currently in developement and should be paired with the backend.
+## setup
+- First run the build command to create an image with docker `docker build . -t frontend`
+- Then run the docker image built `docker run -it -p 8080:8080 frontend`
