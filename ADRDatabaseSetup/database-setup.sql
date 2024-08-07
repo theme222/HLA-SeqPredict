@@ -23,6 +23,8 @@ CREATE TABLE "HLA_ADR" (
     allele_id integer,
     drug_id integer,
     adr_id integer,
+    odds_exposed TEXT,
+    link TEXT,
     PRIMARY KEY (id)
     FOREIGN KEY (allele_id) REFERENCES Alleles(allele_id)
     FOREIGN KEY (drug_id) REFERENCES Drugs(drug_id)

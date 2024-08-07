@@ -5,7 +5,7 @@ import pandas as pd
 from TechnicalToolsV2 import log, time_convert
 
 filename = "database-setup.sql"
-database_name = "HLA-ADR.db"
+database_name = "HLA_ADR.db"
 
 # Delete existing database file
 if os.path.exists(database_name):
@@ -76,6 +76,8 @@ def add_values():
     alleles = list(df["hla_adr_allele"])
     drugs = list(df["hla_adr_drug_id"])
     adr = list(df["hla_adr_adr"])
+    odds = list(df["hla_adr_odds_exposed"])
+    links = list(df["hla_adr_pubmed_link"])
     for i in range(len(adr)):
 
         # find the allele_id
@@ -94,8 +96,12 @@ def add_values():
         # find the adr_id
         adr_id = get_value("adr_id", "ADR", {"name": adr[i]})
 
-        cursor.execute("INSERT INTO HLA_ADR (id,allele_id,drug_id,adr_id) VALUES (?,?,?,?)",
-                       (i, allele_id, drug_id, adr_id))
+        odds[i] = str(odds[i])
+        if odds[i] == 'nan':
+            odds[i] = "NULL"
+
+        cursor.execute("INSERT INTO HLA_ADR (id,allele_id,drug_id,adr_id,odds_exposed,link) VALUES (?,?,?,?,?,?)",
+                       (i, allele_id, drug_id, adr_id, odds[i], links[i]))
 
 
 def main():
