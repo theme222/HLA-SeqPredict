@@ -4,3 +4,4 @@ This is a frontend website made using the Vue composition API. It is currently i
 ## setup
 - First run the build command to create an image with docker `docker build . -t frontend`
 - Then run the docker image built `docker run -it -p 8080:8080 frontend`
+

@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from TechnicalToolsV2 import log, sha256
-from file_handler import transform_file_for_igv, connect, disconnect, get_range_of_bam_file, get_adr, run
+from file_handler import transform_file_for_igv, connect, disconnect, get_range_of_bam_file, get_adr, run, \
+    get_status_code, set_status_code, run_hla_la, format_hla_la, is_available, set_available
 from time import time, sleep
 import secrets
 import shutil
@@ -12,6 +13,12 @@ import re
 
 DATABASE_NAME = "users.db"  # go change in file_handler.py as well
 SESSION_DURATION = 1000000  # Seconds
+
+# status codes
+IDLE = 0
+WORKING = 1
+COMPLETED = 2
+
 CURRENT_FILE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))  # home/sirat/Code/ADR-Prediction/WebBackend/
 TYPING_TOOLS = ['hla_la', 'optitype', 'hisat_genotype', 'snp_bridge']
 ASSOCIATED_FILETYPES = ['.bam', '.bam.bai', '.fq', '.sam']
@@ -156,7 +163,7 @@ def api_get_sequences():
     user_id, name, email = info
     connection, cursor = connect()
     cursor.execute(
-        "SELECT user_id,label,optitype,hisat_genotype,hla_la,snp_bridge FROM User_sequences WHERE user_id = ?",
+        "SELECT id,label,upload_time,igv,hla_la,hisat_genotype,optitype FROM User_sequences WHERE user_id = ?",
         (user_id,))
 
     return jsonify({"list": cursor.fetchall()})
@@ -207,17 +214,46 @@ def api_upload_file():
     log(f"Directory '{directory}' created.")
 
     # Save the uploaded file to a designated location
-    file.save(f'{directory}/' + filename + '.fq')
-
+    file.save(f'{directory}/{filename}.fq')
     connection, cursor = connect()
     cursor.execute("INSERT INTO User_sequences (user_id,label) VALUES (?,?)", (user_id, filename))
     disconnect(connection, cursor)
-    threading.Thread(target=transform_file_for_igv, args=(directory, filename)).start()
+
+    threading.Thread(target=transform_file_for_igv, args=(f"uploads/{user_id}/{filename}", filename, user_id)).start()
     return 'File uploaded successfully', 200
 
 
-@app.route('/api/requestFile', methods=['POST'])
-def api_request_file():
+@app.route('/api/run/hla_la', methods=['POST'])
+def api_run_hla_la():
+    log("Requesting to run HLA-LA : ", logtitle="POST REQUEST", color='yellow')
+
+    # get account info
+    cookie = request.json['session_cookie']
+    info = get_account_info_from_db(cookie)
+
+    if not info:
+        log("Invalid cookie", logtitle='error', color='red')
+        return "Invalid session cookie", 401
+
+    user_id, name, email = info
+    label = request.json["label"]
+
+    status = get_status_code(label, "hla_la", user_id)
+
+    if status == COMPLETED:
+        return 'File already processed', 200
+    elif status == WORKING:
+        return 'File being processed', 200
+
+    if not is_available():
+        return "Another instance of HLA*LA is being ran please try again later", 200
+
+    threading.Thread(target=run_hla_la, args=(f"uploads/{user_id}/{label}", label, user_id)).start()
+    return 'Running HLA-LA', 200
+
+
+@app.route('/api/requestFile/igv', methods=['POST'])
+def api_request_file_igv():
     sequence_label = request.json["label"]
     cookie = request.json['session_cookie']
 
@@ -230,7 +266,7 @@ def api_request_file():
         return "Invalid session cookie", 401
 
     user_id, name, email = info
-    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/{sequence_label}"
+    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/{sequence_label}/igv"
 
     if not os.path.exists(directory):
         log("Path doesn't exist", logtitle="error", color='red')
@@ -255,7 +291,7 @@ def api_request_file():
                     "range": get_range_of_bam_file(directory + "/" + sequence_label + ".bam")})
 
 
-@app.route('/api/getTypingResults', methods=['POST'])
+@app.route('/api/getResults/hla_la', methods=['POST'])
 def api_get_typing_results():
     sequence_label = request.json["label"]
     cookie = request.json['session_cookie']
@@ -271,27 +307,15 @@ def api_get_typing_results():
 
     user_id, name, email = info
 
-    connection, cursor = connect()
-    cursor.execute('SELECT hla_la,optitype,hisat_genotype,snp_bridge FROM User_sequences WHERE user_id=? AND label=?',
-                   (user_id, sequence_label))
+    if get_status_code(sequence_label, "hla_la", user_id) != 2:
+        return jsonify([]), 200
 
-    typing_results = cursor.fetchone()
-    return_dict = {}
-    disconnect(connection, cursor)
+    alleles = format_hla_la(f"/app/uploads/{user_id}/{sequence_label}/hla_la/out/hla/R1_bestguess_G.txt")
+    return_list = []
+    for allele in alleles:
+        return_list.extend(get_adr(allele))
 
-    for index, tool_result in enumerate(typing_results):
-
-        # get the adr for each type found
-        if tool_result is None:
-            return_dict[TYPING_TOOLS[index]] = {"alleles": [], "adr": []}
-        else:
-            alleles = tool_result.split(',')
-            adr_list = []
-            for allele in alleles:
-                adr_list.append(get_adr(allele))
-            return_dict[TYPING_TOOLS[index]] = {"alleles": alleles, "adr": adr_list}
-
-    return jsonify(return_dict)
+    return jsonify(return_list)
 
 
 @app.route('/api/deleteSequence', methods=['POST'])
@@ -349,6 +373,7 @@ def file_chr6_fa():
 
 @app.route('/')
 def hello():
+    set_available()
     return "<b>Just checking if the backend works or not lol nice port number am I right :)</b>"
 
 

@@ -1,5 +1,10 @@
 
 /WebBackend/.idea
 /WebFrontend/node_modules/.cache
-/WebBackend/.idea
-WebBackend/references/chr6.fa
+/WebBackend/references/chr6.fa
+/WebBackend/references/*
+/WebFrontend/deployment.template.yaml
+/WebBackend/deployment.template.yaml
+/WebBackend/uploads/*
+/WebBackend/Dockerfile
+/WebFrontend/Dockerfile

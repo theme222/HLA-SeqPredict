@@ -16,13 +16,15 @@ CREATE TABLE "Sessions" (
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
+-- CODE : 0 - HAS NOT BEEN CALLED, 1 - WORKING, 2 - DONE
 CREATE TABLE "User_sequences" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    upload_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     user_id INTEGER NOT NULL,
     label TEXT NOT NULL,
-    hla_la TEXT DEFAULT NULL,
-    optitype TEXT DEFAULT NULL,
-    hisat_genotype TEXT DEFAULT NULL,
-    snp_bridge TEXT DEFAULT NULL,
+    igv INTEGER DEFAULT 0,
+    hla_la INTEGER DEFAULT 0,
+    hisat_genotype INTEGER DEFAULT 0,
+    optitype INTEGER DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );

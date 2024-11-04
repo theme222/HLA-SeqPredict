@@ -1,36 +1,30 @@
 /* eslint-disable */
+
+
+function errorHandler(error)
+{
+    window.sharedData.latestError = error
+    console.error(error)
+}
+
 let igvMade = 0
 let currentBrowser
 let currentTrack 
 let igvDivDiv = document.getElementById("igv-div-div")
 let igvDiv = document.getElementById("igv-div");
+let prevUrl = null
+let prevSequence = ""
+let backendLink = window.sharedData.backendLink // fuckin lifesaver
 
-async function makeIGV(igvDiv) { /* 
-    let seqURL = await axios.post("http://localhost:7000/api/getfile")
-                .catch(error => {
-                    alert(error)
-                    console.log("Error getting file")
-                })
-
-    console.log(seqURL)
-    */
+async function makeIGV(igvDiv) { 
+    if (igvMade == 1) return;
+    igvMade += 1
     var options = {
         reference: {
             "id": "chr6",
             "name": "Human Chromosome 6",
-            "fastaURL": "http://127.0.0.1:7000/reference/chr6.fa",
-            'indexURL': "http://127.0.0.1:7000/reference/chr6.fa.fai",
-
-            /* 
-            "tracks": [
-                {
-                    "name": "Your sequence",
-                    "format": "bam",
-                    "url": "http://127.0.0.1:7000/api/getfile",
-                    "indexURL": "http://127.0.0.1:7000/api/getfileaaa"
-                }
-            ]
-            */
+            "fastaURL": `${backendLink}/reference/chr6.fa`,
+            'indexURL': `${backendLink}/reference/chr6.fa.fai`,
         },
         locus: 'NC_000006.12:29,940,368-29,947,527'
     };
@@ -38,66 +32,62 @@ async function makeIGV(igvDiv) { /*
     igv.createBrowser(igvDiv, options).then(function (browser) {
         currentBrowser = browser
         console.log("Created IGV browser");
-        igvMade += 1
-    }).catch(function (error) {
-        console.error("Error creating IGV browser:", error);
-    });
+        console.log(igvMade)
+    }).catch(errorHandler);
 }
 
-let prevUrl = null
-setInterval(() => {
+function interval()
+{
+    // Displaying igv
     let currURL = window.location.href
+    let onDashboard = window.location.href.split('/').pop() == 'dashboard'
     if (currURL != prevUrl) {
         prevUrl = currURL
-        if (window.location.href.split('/').pop() == 'dashboard') { // last element in array is dashboard it is the correct page
-
-            igvDivDiv.style.zIndex = 1
-            if (igvMade == 0) {
-                makeIGV(igvDiv)
-            }
-            document.getElementById("visualizeIGV").onclick = function () {
-                if (currentBrowser) {
-                    let currentSequence = document.getElementById("sequences").value
-                    if (currentSequence) {
-                        axios.post("http://localhost:7000/api/requestFile", {
-                            session_cookie: Cookies.get('session_cookie'),
-                            label: currentSequence
-                        }).then(response => {
-                            console.log(`loading track info from ${response.data['token_bam']} and ${response.data['token_bam_bai']}`)
-                            
-                            if (currentTrack){
-                                currentBrowser.removeTrack(currentTrack)
-                            }
-                            console.log(response.data['range'])
-                            currentBrowser.search("NC_000006.12:"+response.data['range'])
-                            currentBrowser.loadTrack(
-                                {
-                                    "name": "Your sequence",
-                                    "format": "bam",
-                                    "url": "http://localhost:7000/download/" + response.data['token_bam'],
-                                    "indexURL": "http://localhost:7000/download/" + response.data['token_bam_bai']
-                                  })
-                              .then(function (newTrack) {
-                                alert("Track load success")
-                                currentTrack = newTrack
-                              })
-                              .catch(function (error)  {
-                                 alert(error)
-                                 console.error(error)
-                              })
-
-                        }).catch(error => {
-                            alert(error.data)
-                            console.log(error.data)
-                        })
-                    }
-
-                }
-            };
-
-
+        // Checking if on dashboard screen then hide if not
+        if (onDashboard) { 
+            igvDivDiv.style.display = 'block'
         } else {
-            igvDivDiv.style.zIndex = -1
+            igvDivDiv.style.display = 'none'
         }
     }
-}, 1)
+
+    // Getting current sequence
+    if (!onDashboard) {return}
+    let currentSequence = document.getElementById("selectedSequence").textContent
+    if (currentSequence == "") return
+    if (currentSequence != prevSequence && currentBrowser)
+    {
+        prevSequence = currentSequence
+        axios.post(`${backendLink}/api/requestFile/igv`, // TODO: MAKE SURE TO ADD /igv AT THE END AS WELLL
+        {
+            session_cookie: Cookies.get('session_cookie'),
+            label: currentSequence
+        })
+        .then(response => {
+            console.log(`loading track info from ${response.data['token_bam']} and ${response.data['token_bam_bai']}`)
+            
+            if (currentTrack){
+                currentBrowser.removeTrack(currentTrack)
+            }
+            console.log(response.data['range'])
+            currentBrowser.search("NC_000006.12:"+response.data['range'])
+            currentBrowser.loadTrack(
+                {
+                    "name": "Your sequence",
+                    "format": "bam",
+                    "url": `${backendLink}/download/` + response.data['token_bam'],
+                    "indexURL": `${backendLink}/download/` + response.data['token_bam_bai']
+                    })
+                .then(function (newTrack) {
+                alert("Track load success")
+                currentTrack = newTrack
+                })
+        }).catch(errorHandler)
+    }
+
+
+}
+
+makeIGV(igvDiv)
+setInterval(interval, 100)
+

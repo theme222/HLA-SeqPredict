@@ -6,7 +6,9 @@ import signup from '../views/SignupView.vue'
 import upload from '../views/UploadView.vue'
 import dashboard from '../views/DashboardView.vue'
 import profile from '../views/ProfileView.vue'
+import results from '../views/ResultsView.vue'
 import RedirectToHomePlz from '@/scripts/RedirectToHomePlz.vue'
+import PDPA from '../views/PDPA.vue'
 
 const routes = [
   {path : '/', name: 'redirectToHome', component: RedirectToHomePlz},
@@ -15,7 +17,9 @@ const routes = [
   {path : '/signup', name: 'signup', component: signup},
   {path : '/upload', name: 'upload', component: upload},
   {path : '/dashboard', name: 'dashboard', component: dashboard},
-  {path : '/profile', name: 'profile', component: profile}
+  {path : '/profile', name: 'profile', component: profile},
+  {path : '/results', name: 'results', component: results},
+  {path : '/pdpa', name: 'pdpa', component: PDPA},
 ]
 
 const router = createRouter({

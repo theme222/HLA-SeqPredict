@@ -13,19 +13,28 @@ const route = useRoute();
 
 const sequenceDropdown = ref([]);
 const currentSequence = ref("");
-const accountName = ref();
-const accountEmail = ref();
-const deleteButtonStatus = ref("Delete");
+const accountName = ref("");
+const accountEmail = ref("");
+const deleteButtonStatus = ref("Delete Sequence");
 
 getAccountInfo().then((data) => {
-  accountName.value = data["name"];
-  accountEmail.value = data["email"];
+  if (data)
+  {
+    accountName.value = data["name"];
+    accountEmail.value = data["email"];
+  }
+  else
+  {
+    router.push({name:"login"})
+    alert("Please login first")
+  }
 });
 
 async function deleteSequence(){
-  if (deleteButtonStatus.value == "Delete"){
-    deleteButtonStatus.value = "Confirm?"
-    setTimeout(() => {deleteButtonStatus.value = "Delete"},3000)
+  if (currentSequence.value == "") {return}
+  if (deleteButtonStatus.value == "Delete Sequence"){
+    deleteButtonStatus.value = "Confirm delete?"
+    setTimeout(() => {deleteButtonStatus.value = "Delete Sequence"},3000)
   } else {
     axios.post(backendLink+"/api/deleteSequence", {session_cookie: Cookies.get('session_cookie'), label:currentSequence.value})
     .then(response =>{
@@ -55,108 +64,88 @@ addToSequenceList();
 </script>
 
 <template>
-  <h1 class="heading">Welcome, {{ accountName }} ({{ accountEmail }})</h1>
 
-  <div class="profileSelectDiv">
-    <h2 class="heading2">Current sequence :</h2>
 
-    <div
-      class="dropdownDiv"
-      style="top: 50%; left: 390px; transform: translate(-50%, -50%)"
-    >
-      <select
-        name="sequences"
-        id="sequences"
-        class="dropdown"
-        v-model="currentSequence"
-      >
-        <option value="" disabled selected>Select a sequence</option>
-        <option v-for="i in sequenceDropdown" :key="i" :value="i.value">
-          {{ i.value }}
-        </option>
-      </select>
-      <img
-        src="@/assets/down-arrow.svg"
-        alt="down-arrow"
-        style="
-          position: absolute;
-          filter: invert(99%) sepia(1%) saturate(594%) hue-rotate(271deg)
-            brightness(114%) contrast(100%);
-          left: 86%;
-          top: 50%;
-          width: 25%;
-          height: 100%;
-          pointer-events: none;
-          transform: translate(-50%, -50%);
-        "
-      />
+  <div class="absolute w-full h-96 top-32 flex justify-center items-center ">
+    <div class="w-256 h-full shadow-md bg-white rounded-md">
+      
+      <div class="relative left-8 w-80 h-24 flex items-center">
+        <p class="text-5xl font-bold"> Account info </p>
+      </div>
+
+      <div class="w-128 h-64 grid grid-cols-1 grid-rows-3 relative left-8 top-0">
+
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Name</span>
+          </div>
+          <input  v-model="accountName" @change="checkValidLabel" type="text"  class="input input-bordered input-primary w-full h-16" />
+        </label>
+
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Email</span>
+          </div>
+          <input  v-model="accountEmail" @change="checkValidLabel" type="text" class="input input-bordered input-primary w-full h-16" />
+        </label>
+        
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Password</span>
+          </div>
+          <input @change="checkValidLabel" type="password" value="idk your password bro it's hashed" class="input input-bordered input-primary w-full h-16" />
+        </label>
+
+      </div>
+
+      <div class="w-full h-12 relative -top-12 flex justify-end items-center pointer-events-none">
+          <button disabled class="btn btn-accent h-full w-64 relative right-20 pointer-events-auto" @click="uploadFile">
+            <p class="px-2">Save changes</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+            </svg> 
+          </button>
+      </div>
+
+      <div class="w-full relative -top-96 flex justify-end items-center pointer-events-none">
+        <div class="avatar placeholder right-20">
+          <div class="bg-neutral text-neutral-content rounded-full w-64">
+            <span class="text-7xl">{{accountName.toUpperCase().split(' ').map(word => word[0]).join('')}}</span>
+          </div>
+        </div> 
+      </div>
+
     </div>
-    <button class="deleteButton" @click="deleteSequence">
-      <img
-        src="@/assets/trash-can.svg"
-        alt="trash-can"
-        style="
-          position: absolute;
-          height: 45%;
-          width: 34%;
-          left: 19%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-        "
-      />
-
-      <span
-        style="
-          left: 60%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          position: absolute;
-        "
-        >{{deleteButtonStatus}}</span
-      >
-    </button>
   </div>
+  
+  <div class="absolute w-full h-96 top-144 flex justify-center items-center ">
+    <div class="w-256 h-full shadow-md bg-white rounded-md">
+      
+      <div class="relative left-8 w-80 h-24 flex items-center">
+        <p class="text-5xl font-bold"> Sequences </p>
+      </div>
+
+      <div class="w-64 h-14 flex justify-start relative left-8 top-0">
+        <select v-model="currentSequence" class="select select-primary w-full max-w-xs">
+          <option value="" disabled selected>Select a sequence</option>
+          <option v-for="i in sequenceDropdown" :key="i" :value="i.value">
+            {{ i.value }}
+          </option>
+        </select>
+
+
+      </div>
+
+      <div class="w-full h-12 relative left-8 top-40 flex items-center pointer-events-none ">
+          <button class="btn btn-error h-full w-64 relative  pointer-events-auto" @click="deleteSequence">
+            <p class="px-2">{{deleteButtonStatus}}</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+            </svg> 
+          </button>
+      </div>
+
+    </div>
+  </div>
+  
 </template>
-
-<style>
-.profileSelectDiv {
-  position: absolute;
-  left: 50%;
-  top: 20%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 9%;
-}
-
-.heading2 {
-  position: absolute;
-  top: 35%;
-  left: 130px;
-  transform: translate(-50%, -50%);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.deleteButton {
-  position: absolute;
-  top: 50%;
-  left: 600px;
-  height: 51px;
-  width: 140px;
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 3px;
-  padding: 12px 24px;
-  border: 0;
-  color: #fff;
-  background: #36382e;
-  line-height: 1.15;
-  font-size: 1em;
-  transform: translate(-50%, -50%);
-}
-.deleteButton:hover {
-  background: #B20D30;
-  transition: all 0.5s ease;
-}
-</style>

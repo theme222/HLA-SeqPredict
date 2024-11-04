@@ -3,10 +3,12 @@
 import { getAccountInfo, getSequences, backendLink} from "@/scripts/AccountFunc";
 import { ref } from "vue";
 import axios from "axios";
+import router from "@/router";
+import { sharedData } from "@/scripts/SharedData";
 
 
 const sequenceDropdown = ref([]);
-const currentSequence = ref("");
+const selectedSequence = ref("");
 const typingResults = ref({
   hla_la: ["", "", "", ""],
   optitype: ["", "", "", ""],
@@ -14,76 +16,55 @@ const typingResults = ref({
   snp_bridge: ["", "", "", ""],
 });
 
-
-
-function generateList(n) {
-  return Array.from({ length: n }, (_, index) => index + 1);
+function gotoProfile()
+{
+  sharedData["patientName"] = "test";
+  router.push({name:"profile"})
 }
 
-function longestListLength(dict) {
-  // chatgpt babyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-  let longestLength = 0;
-  let longestListValue = 0;
-
-  // Iterate through each key-value pair in the dictionary
-  for (let key in dict) {
-    if (dict.hasOwnProperty(key)) {
-      let value = dict[key];
-      // Check if the current value is a list and its length is greater than the longest length found so far
-      if (Array.isArray(value) && value.length > longestLength) {
-        longestLength = value.length;
-        longestListValue = value;
+function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
       }
-    }
-  }
+}
 
-  return Math.floor(longestListValue.length);
+async function getReport(seq_id,label) 
+{
+  let response = await axios
+      .post(backendLink+"/api/getResults/hla_la", {
+        session_cookie: Cookies.get("session_cookie"),
+        label: label,
+      })
+      .catch(console.error);
+  sharedData.sequenceLabel = label
+  sharedData.sequenceId = seq_id
+  sharedData.drugList = response.data
+  router.push("results")
+}
+
+async function runTool(sequence_label)
+{
+  let response = await axios
+      .post(backendLink+"/api/run/hla_la", {
+        session_cookie: Cookies.get("session_cookie"),
+        label: sequence_label,
+      })
+      .catch(console.error);
+  alert(response.data)
 }
 
 async function addToSequenceList() {
   let serverData = await getSequences();
+  let labelIndex = 1;
+  if (!serverData) return;
   for (let sequence of serverData) {
-    sequenceDropdown.value.push({ value: sequence[1] });
+    sequenceDropdown.value.push(sequence);
   }
   console.log(sequenceDropdown.value);
 }
 
-function runTool(toolName) {
-  console.log(currentSequence.value);
-  console.log(`running ${toolName}`);
-  /*
-  axios.post(backendLink+"/api/runTool",{session_cookie: Cookies.get('session_cookie'), label:currentSequence.value, tool_name:toolName})
-  .then( response =>{
-    alert("Started running "+ toolName)
-  })
-  .catch( err =>{
-    alert(err.message)
-  })
-  */
-}
 
-async function getTypingResults() {
-  console.log(currentSequence.value);
-  let response = await axios
-    .post(backendLink+"/api/getTypingResults", {
-      session_cookie: Cookies.get("session_cookie"),
-      label: currentSequence.value,
-    })
-    .catch((err) => {
-      alert(err.message);
-      console.error(err);
-    });
-  console.log(response.data);
-  for (let toolName in response.data) {
-    typingResults.value[toolName] = [];
-    for (let i = 0; i < response.data[toolName]["alleles"].length; i++) {
-      typingResults.value[toolName].push(response.data[toolName]["alleles"][i]);
-    }
-    for (let i = 0; i < response.data[toolName]["adr"].length; i++) {
-      typingResults.value[toolName].push(response.data[toolName]["adr"][i].toString() || 'Not in database');
-    }
-  }
-}
 
 
 addToSequenceList();
@@ -91,407 +72,124 @@ addToSequenceList();
 
 <template>
 
+  <div id="selectedSequence" class="hidden">{{selectedSequence}}</div>
 
-  <div class="dashboardHeadingWrapper">
-    <h2 class="dashboardHeading">Dashboard</h2>
+  <div class="absolute top-20 grid gap-16 grid-cols-1 w-full py-10">
+  <div class="flex justify-center items-center h-200 w-full">
+    <div class="w-11/12 min-w-96 h-full shadow-md bg-white rounded-md">
+      <div class="flex items-center justify-center w-full h-32 inherit">
+        <h1 class="text-4xl font-bold ">Dashboard</h1>
+      </div>
+      <div class="flex justify-center h-4/5 ">
+        <div class="overflow-x-auto w-11/12 ">
+          <table class="table table-pin-rows  ">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Label</th>
+                <th>Date Uploaded</th>
+                <th>HLA*LA</th>
+                <th>View</th>
+                <th>Report</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr v-for="i in sequenceDropdown" :key="i" :value="i[1]">
+                <th>{{i[0]}}</th>
+                <th>{{i[1]}}</th>
+                <th>{{i[2]}}</th>
+                
+                <th>
+                  <button class="btn bg-blue-100 border-blue-100 " @click="runTool(i[1])"><p class="px-2"> Run </p>
+                  </button>
+                </th>
+
+                <th>
+                  <button class="btn bg-black-100 border-black-100" @click="scrollToSection('igvSection'); selectedSequence = i[1]"><p class="px-2"> View </p>
+                    <svg fill="#000" class="h-5 w-5" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                      viewBox="0 0 488.85 488.85" xml:space="preserve">
+                    <g>
+                      <path d="M244.425,98.725c-93.4,0-178.1,51.1-240.6,134.1c-5.1,6.8-5.1,16.3,0,23.1c62.5,83.1,147.2,134.2,240.6,134.2
+                        s178.1-51.1,240.6-134.1c5.1-6.8,5.1-16.3,0-23.1C422.525,149.825,337.825,98.725,244.425,98.725z M251.125,347.025
+                        c-62,3.9-113.2-47.2-109.3-109.3c3.2-51.2,44.7-92.7,95.9-95.9c62-3.9,113.2,47.2,109.3,109.3
+                        C343.725,302.225,302.225,343.725,251.125,347.025z M248.025,299.625c-33.4,2.1-61-25.4-58.8-58.8c1.7-27.6,24.1-49.9,51.7-51.7
+                        c33.4-2.1,61,25.4,58.8,58.8C297.925,275.625,275.525,297.925,248.025,299.625z"/>
+                    </g>
+                    </svg>
+                </button>
+              </th>
+
+                <th>
+                  <button class="btn bg-teal-200 border-teal-200" @click="getReport(i[0],i[1])"><p class="px-2"> Report </p>
+                    <svg fill="#000000" class="h-6 w-6" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                      viewBox="0 0 612 612" xml:space="preserve">
+                    <g>
+                      <g>
+                        <g>
+                          <g>
+                            <path d="M577.661,612H34.339c-10.358,0-18.751-8.396-18.751-18.751V18.751C15.588,8.396,23.98,0,34.339,0h543.322
+                              c10.355,0,18.751,8.396,18.751,18.751v574.497C596.412,603.604,588.016,612,577.661,612z M53.09,574.497h505.82V37.502H53.09
+                              V574.497z"/>
+                          </g>
+                          <g>
+                            <path d="M476.951,157.596H135.047c-10.355,0-18.751-8.393-18.751-18.751c0-10.355,8.396-18.751,18.751-18.751h341.905
+                              c10.355,0,18.751,8.396,18.751,18.751C495.702,149.204,487.307,157.596,476.951,157.596z"/>
+                          </g>
+                          <g>
+                            <path d="M476.951,269.033H135.047c-10.355,0-18.751-8.393-18.751-18.751c0-10.355,8.396-18.751,18.751-18.751h341.905
+                              c10.355,0,18.751,8.396,18.751,18.751C495.702,260.641,487.307,269.033,476.951,269.033z"/>
+                          </g>
+                          <g>
+                            <path d="M476.951,380.469H135.047c-10.355,0-18.751-8.393-18.751-18.751c0-10.355,8.396-18.751,18.751-18.751h341.905
+                              c10.355,0,18.751,8.396,18.751,18.751C495.702,372.076,487.307,380.469,476.951,380.469z"/>
+                          </g>
+                          <g>
+                            <path d="M278.154,491.906H135.047c-10.355,0-18.751-8.394-18.751-18.751c0-10.355,8.396-18.751,18.751-18.751h143.106
+                              c10.355,0,18.751,8.396,18.751,18.751C296.905,483.512,288.509,491.906,278.154,491.906z"/>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                    </svg>
+                  </button>
+                </th>           
+
+
+                <th>
+                  <button class="btn bg-error border-error" @click="gotoProfile"><p class="px-2"> Delete </p>
+                  <svg fill="#000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    class="h-6 w-6" viewBox="0 0 468.36 468.36"
+                    xml:space="preserve">
+                  <g>
+                    <g>
+                      <path d="M381.048,64.229l-71.396,0.031L309.624,0L158.666,0.064l0.027,64.26l-71.405,0.031l0.024,60.056h293.76L381.048,64.229z
+                        M189.274,30.652l89.759-0.04l0.016,33.66l-89.759,0.04L189.274,30.652z"/>
+                      <path d="M87.312,468.36h293.76V139.71H87.312V468.36z M303.042,184.588h15.301v238.891h-15.301V184.588z M226.542,184.588h15.3
+                        v238.891h-15.3V184.588z M150.042,184.588h15.3v238.891h-15.3V184.588z"/>
+                    </g>
+                  </g>
+                  </svg>
+                  </button>
+                </th>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>  
+      </div>
+      
+    </div>  
   </div>
+    <div id="igvSection" class="flex justify-center items-center h-144 w-full top-96">
+    <div class="w-11/12 min-w-96 h-full bg-white shadow-md rounded-md">
+          <div class="flex items-center justify-center w-full h-32 inherit">
+        <h1 class="text-4xl font-bold link-hover"><a href="https://github.com/igvteam/igv.js/">IGV.js</a></h1>
+      </div>
+    </div>
+    </div>
 
-  <div class="dropdownDiv">
-    <select
-      name="sequences"
-      id="sequences"
-      class="dropdown"
-      v-model="currentSequence"
-      @change="getTypingResults()"
-    >
-      <option value="" disabled selected>Select a sequence</option>
-      <option v-for="i in sequenceDropdown" :key="i" :value="i.value">
-        {{ i.value }}
-      </option>
-    </select>
-    <img
-      src="@/assets/down-arrow.svg"
-      alt="down-arrow"
-      style="
-        position: absolute;
-        filter: invert(99%) sepia(1%) saturate(594%) hue-rotate(271deg)
-          brightness(114%) contrast(100%);
-        left: 86%;
-        top: 50%;
-        width: 25%;
-        height: 100%;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-      "
-    />
-  </div>
+</div>
 
-  <button class="igvButton" id="visualizeIGV" >
-    View
-  </button>
-
-  <h2 class="tableHeader">Typing results</h2>
-  <div class="tableDiv">
-    <table class="container" :style="{'min-width': longestListLength(typingResults) * 300 + 300 + 'px'}">
-    <thead>
-      <tr>
-        <th>Tools</th>
-        <th
-          v-for="(_, index) in generateList(longestListLength(typingResults)/2)"
-          :key="index"
-          :value="'Gene ' + String(index + 1)"
-        >
-          {{ "Gene " + String(index + 1) }}
-        </th>
-        <th
-          v-for="(_, index) in generateList(longestListLength(typingResults)/2)"
-          :key="index"
-          :value="'ADR ' + String(index + 1)"
-        >
-          {{ "ADR " + String(index + 1) }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <a href="https://github.com/DiltheyLab/HLA-LA">HLA-LA</a>
-          <button class="toolActivateButton" @click="runTool('hla_la')">
-            Run
-          </button>
-        </td>
-        <td v-for="data in typingResults['hla_la']" :key="data" :value="data">
-          {{ data || "-" }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <a href="https://github.com/FRED-2/OptiType/">Optitype</a>
-          <button class="toolActivateButton" @click="runTool('optitype')">
-            Run
-          </button>
-        </td>
-        <td v-for="data in typingResults['optitype']" :key="data" :value="data">
-          {{ data || "-" }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <a href="https://github.com/DaehwanKimLab/hisat-genotype"
-            >HISAT-genotype</a
-          >
-          <button class="toolActivateButton" @click="runTool('hisat_genotype')">
-            Run
-          </button>
-        </td>
-        <td v-for="data in typingResults['hisat_genotype']" :key="data" :value="data">
-          {{ data || "-" }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <a href="https://github.com/theme222/SNP-Bridge">SNP-Bridge</a>
-          <button class="toolActivateButton" @click="runTool('snp_bridge')">
-            Run
-          </button>
-        </td>
-        <td v-for="data in typingResults['snp_bridge']" :key="data" :value="data">
-          {{ data || "-" }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-  
-
-  <div style="position: absolute; top: 100%; height: 7%; width: 20%"></div>
 </template>
-
-<style>
-.toolActivateButton {
-  position: absolute;
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
-  left: 250px;
-  height: 15%;
-  border-radius: 3px;
-  padding: 12px 24px;
-  text-align: center;
-  border: 0;
-  color: #3a4149;
-  background: #ebebeb;
-  line-height: 1.15;
-  font-size: 1em;
-  transform: translate(-50%, -35%);
-  width: 90px;
-}
-
-.toolActivateButton:hover {
-  transition: all 0.1s ease;
-  box-shadow: 0 0 0 0 #fff, 0 0 0 3px #6a66a3;
-}
-
-.tableHeader {
-  font-family: Arial, Helvetica, sans-serif;
-  position: absolute;
-  color: black;
-  font-size: 2em;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%);
-}
-
-.tableDiv{
-  position: absolute;
-  left: 50%;
-  top: 87%;
-  transform: translate(-50%, -50%);
-  width: 99%;
-  height: 29%;
-  margin: auto;
-  overflow: auto;
-}
-
-.container {
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: left;
-  margin: auto;
-  overflow: auto;
-  border-collapse: separate;
-  width: 100%;
-  display: table;
-  height: 100%;
-  position: absolute;
-  background: #36382e;
-  color: white;
-  border-radius: 5px;
-}
-
-.container th {
-  text-align: center;
-  background-color: #6a66a3;
-}
-
-/* Background-color of the odd rows */
-.container tr:nth-child(odd) {
-  background-color: #6d9f71;
-}
-
-/* Background-color of the even rows */
-.container tr:nth-child(even) {
-  background-color: #337357;
-}
-
-.container tr td {
-  padding-left: 20px;
-  width: 300px;
-}
-
-.container tr td a {
-  text-decoration: underline;
-  font-weight: 900;
-}
-
-.container tr td:hover {
-  transition-duration: 0.4s;
-  background-color: #36382e;
-}
-
-.igvButton {
-  position: absolute;
-  top: 18.92%;
-  left: 300px;
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
-  height: 51px;
-  border-radius: 3px;
-  padding: 12px 24px;
-  border: 0;
-  color: #3a4149;
-  background: #ff6700;
-  line-height: 1.15;
-  font-size: 1em;
-  transform: translate(-50%, -50%);
-  width: 90px;
-}
-
-.igvButton:hover {
-  transition: all 0.1s ease;
-  box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
-}
-
-.dropdown {
-  /* Reset */
-  appearance: none;
-  border: 0;
-  outline: 0;
-  font: inherit;
-  /* Personalize */
-  width: 100%;
-  padding: 1rem 4rem 1rem 1rem;
-  background: #6a66a3;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 900;
-  border-radius: 0.25em;
-  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-}
-
-.dropdownDiv {
-  position: absolute;
-  top: 17%;
-  width: 230px;
-}
-
-.igvDivDivlol {
-  position: absolute;
-  width: 99.4%;
-  height: 32%;
-  top: 39%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  background: white;
-
-  box-shadow: 0 0 0 0 #fff, 0 0 0 5px #6a66a3;
-  border-radius: 5px;
-}
-
-a:link {
-  color: white;
-  text-decoration: none;
-}
-
-a:visited {
-  color: white;
-  text-decoration: none;
-}
-
-a:hover {
-  color: white;
-}
-
-a:active {
-  color: white;
-  text-decoration: none;
-}
-
-.accountName {
-  text-wrap: nowrap;
-  left: 92%;
-  transition: all 0.2s ease;
-  position: absolute;
-  font-weight: 200;
-  color: white;
-  font-size: 1.5em;
-  top: 17%;
-  transform: translate(-50%);
-  background: #36382e;
-  padding: 0.5%;
-  padding-left: 1%;
-  padding-right: 1%;
-  border-radius: 5px;
-}
-
-.accountName:hover {
-  transition: all 0.2s ease;
-  background: #6a66a3;
-  cursor: pointer;
-}
-
-.dashboardHeadingWrapper {
-  position: absolute;
-  top: 6%;
-  left: 50%;
-}
-
-.dashboardHeading {
-  font-family: Arial, Helvetica, sans-serif;
-  transform: translate(-50%);
-  font-size: 3em;
-}
-
-.buttonWrapper {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%);
-}
-
-.inputfile {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-}
-
-.inputfile + label {
-  transform: translate(1%);
-  padding: 10%;
-  padding-left: 20%;
-  padding-right: 20%;
-  font-size: 1.7em;
-  font-weight: 700;
-  color: white;
-  background-color: #c0c0c0;
-  display: inline-block;
-  border-radius: 4px;
-  border-style: none;
-  text-align: center;
-}
-
-.inputfile:focus + label,
-.inputfile + label {
-  cursor: pointer; /* "hand" cursor */
-}
-
-.submitButton {
-  position: absolute;
-  top: 156%;
-  left: 50%;
-  transform: translate(-50%);
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 3px;
-  padding: 12px 24px;
-  border: 0;
-  color: #3a4149;
-  background: #ff6700;
-  line-height: 1.15;
-  font-size: 1em;
-}
-
-.submitButton:hover {
-  transition: all 0.1s ease;
-  box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
-}
-.filenameDisplay {
-  position: absolute;
-  left: 50%;
-  top: 115%;
-  transform: translate(-50%);
-  white-space: nowrap;
-}
-
-.uploadedFileViewer {
-  background-color: rgb(161, 61, 99);
-  color: #fff;
-  position: absolute;
-  padding: 2%;
-  border-radius: 4px;
-  border-style: none;
-  white-space: nowrap;
-  top: 15%;
-  left: 50%;
-  transform: translate(-50%);
-  font-size: 2em;
-}
-</style>
