@@ -17,7 +17,6 @@ const formData = ref({
   password: ''
 })
 
-
 const formCheck = ref(true)
 
 function GetExpirationDate(duration){
@@ -29,11 +28,11 @@ function GetExpirationDate(duration){
 function sendLoginData(){
   axios.post(backendLink+'/api/login', {email : formData.value.email, password : sha256(formData.value.password)})
     .then(response => {
-      if (response.data["success"]){
+      if (response.data["cookie"]){
         formCheck.value = true
-        Cookies.set('session_cookie', response.data["sessionCookie"], {expires : GetExpirationDate(response.data['duration'])})
+        Cookies.set('session_cookie', response.data["cookie"], {expires : GetExpirationDate(1000000)})
         router.push({name: 'upload'})
-        // REDIRECT TO MAIN PAGE :)
+        setTimeout(() => {window.location.reload();},200)
 
       } else {
         formCheck.value = false

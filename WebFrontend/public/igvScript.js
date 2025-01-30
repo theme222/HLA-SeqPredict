@@ -60,7 +60,7 @@ function interval()
         prevSequence = currentSequence
         axios.post(`${backendLink}/api/requestFile/igv`, // TODO: MAKE SURE TO ADD /igv AT THE END AS WELLL
         {
-            session_cookie: Cookies.get('session_cookie'),
+            cookie: Cookies.get('session_cookie'),
             label: currentSequence
         })
         .then(response => {
@@ -89,5 +89,5 @@ function interval()
 }
 
 makeIGV(igvDiv)
-setInterval(interval, 100)
+setInterval(interval, 500)
 

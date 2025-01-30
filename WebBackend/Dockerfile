@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.11
 WORKDIR /app
 COPY . .
 
@@ -24,6 +24,8 @@ WORKDIR /app
 #     wget https://www.dropbox.com/s/mnkig0fhaym43m0/reference_HLA_ASM.tar.gz && \
 #     tar -xvzf reference_HLA_ASM.tar.gz && \
 #     ../bin/HLA-LA --action prepareGraph --PRG_graph_dir ../graphs/PRG_MHC_GRCh38_withIMGT
+
+RUN apt-get update && apt-get install -y ninja-build
 
 # Installing python libraries
 WORKDIR /app

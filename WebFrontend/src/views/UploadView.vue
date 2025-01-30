@@ -4,24 +4,38 @@ import { ref } from 'vue'
 import { reactive } from 'vue'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import JSZip from "jszip";
 import { useRouter, useRoute } from 'vue-router'
 import { backendLink } from '@/scripts/AccountFunc'
+import { ValidLabel } from '@/scripts/OtherFunc'
+
+const UPLOAD_CHUNK_SIZE = 10 * 1024 * 1024; // 10 MB
 
 const router = useRouter()
 const route = useRoute()
 
-const fileName = ref(null)
-const fileSize = ref("0 Kb")
-const accountName = ref(null)
+const fileName1 = ref(null)
+const fileSize1 = ref("0 Bytes")
+const fileName2 = ref(null)
+const fileSize2 = ref("0 Bytes")
 const validLabel = ref(true)
 const labelValue = ref('')
 
 function changeFileInfo(event){
-  fileName.value = event.target.files[0].name
-  fileSize.value = formatFileSize(event.target.files[0].size)
+  if (event.target.id == "file1")
+  {
+    fileName1.value = event.target.files[0].name
+    fileSize1.value = formatFileSize(event.target.files[0].size)
+  }
+  else
+  {
+    fileName2.value = event.target.files[0].name
+    fileSize2.value = formatFileSize(event.target.files[0].size)
+  }
 }
 
-const formatFileSize = (bytes) => {
+function formatFileSize(bytes)
+{
   const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
   let index = 0;
   while (bytes >= 1024 && index < 4) {
@@ -31,35 +45,69 @@ const formatFileSize = (bytes) => {
   return `${bytes.toFixed(0)} ${units[index]}`
 };
 
-function checkValidLabel(){
-    const regex = /^[a-zA-Z0-9_]+$/;
-    validLabel.value = regex.test(labelValue.value)
-}
+async function uploadFile(){
+  let fileToUpload1 = document.getElementById('file1').files[0]
+  let fileToUpload2 = document.getElementById("file2").files[0]
+  let fileToUpload;
+  let isPaired = false;
 
-function uploadFile(){
-  console.log(document.getElementById('file').files[0])
   if (!validLabel.value) {return 0}
-    if (document.getElementById('file').files[0] === undefined){
-      alert("No file specified") 
-      return 0
-    }
-    const formData = new FormData()
-    let filenameToSet  = String(Math.floor(Date.now()/1000))
-    if (labelValue.value !== "") {filenameToSet = labelValue.value}
-    formData.append('file', document.getElementById('file').files[0], filenameToSet)
-    axios.post(backendLink+"/api/uploadFile", 
-              formData, 
-              {headers: {"Content-Type" : 'multipart/form-data', 
-                        'Authorization': `Bearer ${Cookies.get('session_cookie')}`} })
-    .then(response => {
-      alert(response.data)
-      router.push({name:'dashboard'})
-    })
-    .catch(error => {
-      alert("Please use alpha numeric characters and _ only")
-      console.error('Error uploading file  :', error);
-    });
+  
+  if (fileToUpload1 === undefined && fileToUpload2 === undefined){
+    alert("No file specified") 
+    return 0
   }
+  else if (fileToUpload1 && fileToUpload2)
+  {
+    fileToUpload = new JSZip();
+    // add file to zip thingy idk man
+    fileToUpload.file("file1.fq", fileToUpload1);
+    fileToUpload.file("file2.fq", fileToUpload2);
+    fileToUpload = await fileToUpload.generateAsync({type: "blob"});  // Creates zip file
+    isPaired = true;
+  }
+  else if (fileToUpload1) fileToUpload = fileToUpload1;
+  else if (fileToUpload2) fileToUpload = fileToUpload2;
+  
+  let totalChuncks = Math.ceil(fileToUpload.size / UPLOAD_CHUNK_SIZE);
+  const chunkArray = []
+  alert("Uploading File")
+  console.log(isPaired);
+  for (let i = 0; i < totalChuncks; i++)
+  {
+    const formData = new FormData()
+    let filenameToSet = labelValue.value || String(Math.floor(Date.now()/1000))
+    const chunk = fileToUpload.slice(i * UPLOAD_CHUNK_SIZE, (i+1) * UPLOAD_CHUNK_SIZE);
+    formData.append("chunk", chunk, filenameToSet);
+    formData.append("chunk_index", i);
+    formData.append("total_chunk", totalChuncks);
+    formData.append("is_paired", isPaired);
+    chunkArray.push(formData);
+  }
+  const uploadNextChunk = (index) => {
+    if (index >= chunkArray.length) {
+      alert("File upload complete");
+      router.push("dashboard");
+      return;
+    }
+    const formData = chunkArray[index];
+    axios.post(backendLink+"/api/uploadFile", formData, 
+      {headers: {"Content-Type" : 'multipart/form-data', 
+                'Authorization': `Bearer ${Cookies.get('session_cookie')}`},
+        maxBodyLength: Infinity, // Allow unlimited body size
+        maxContentLength: Infinity, // Allow unlimited content length) 
+              }
+    ).then((response) => {
+      console.log(response.data)
+      uploadNextChunk(index+1)
+    })
+    .catch((err) => console.error(err));
+  }
+  uploadNextChunk(0);
+  
+
+
+}
 
 </script>
 
@@ -74,12 +122,20 @@ function uploadFile(){
 
       <div class="w-full flex justify-evenly relative top-20 h-20">
 
-          <div class="w-8/12">
-            <input id="file" type="file" class="file-input file-input-bordered file-input-primary w-full min-w-xs " accept=".txt, .fq, .FastQ, .fastq" @change="changeFileInfo"/>
-            <div class="label ">
-              <span class="label-text-alt">Size : {{fileSize}}</span>
+          <div class="w-4/12">
+            <input ref="file1Ref" id="file1" type="file" class="file-input file-input-bordered file-input-primary w-full min-w-xs " accept=".txt, .fq, .FastQ, .fastq" @change="changeFileInfo"/>
+            <div class="label">
+              <span class="label-text-alt">Size : {{fileSize1}}</span>
             </div>
           </div>
+          
+          <div class="w-4/12">
+            <input ref="file2Ref" id="file2" type="file" class="file-input file-input-bordered file-input-secondary w-full min-w-xs " accept=".txt, .fq, .FastQ, .fastq" @change="changeFileInfo"/>
+            <div class="label">
+              <span class="label-text-alt">Size : {{fileSize2}}</span>
+            </div>
+          </div>
+
 
           <div class="w-1/4 h-3/5 flex justify-center items-center"> 
             <button class="border border-secondary bg-base-100 font-bold w-full h-full" onclick="infoModal.showModal()">Click me for info</button>
@@ -102,8 +158,8 @@ function uploadFile(){
 
       <div class="w-full h-12 relative top-20 flex justify-evenly items-center">
 
-        <input v-if="validLabel" v-model="labelValue" @change="checkValidLabel" type="text" placeholder="File label here (Use alphanumeric and _ only)" class="input input-bordered input-secondary w-9/12 h-full " />
-        <input v-else v-model="labelValue" @change="checkValidLabel" type="text"  placeholder="File label here (Use alphanumeric and _ only)" class="input input-bordered input-error w-9/12 h-full " />
+        <input v-if="validLabel" v-model="labelValue" @change="validLabel = ValidLabel(labelValue)" type="text" placeholder="File label here (Use English charaters, numbers and _ only)" class="input input-bordered input-secondary w-9/12 h-full " />
+        <input v-else v-model="labelValue" @change="validLabel = ValidLabel(labelValue)" type="text"  placeholder="File label here (Use English charaters, numbers and _ only)" class="input input-bordered input-error w-9/12 h-full " />
 
         <button class="btn btn-accent h-full w-32" @click="uploadFile">
           Upload

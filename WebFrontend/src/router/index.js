@@ -9,6 +9,7 @@ import profile from '../views/ProfileView.vue'
 import results from '../views/ResultsView.vue'
 import RedirectToHomePlz from '@/scripts/RedirectToHomePlz.vue'
 import PDPA from '../views/PDPA.vue'
+import search from '../views/SearchView.vue'
 
 const routes = [
   {path : '/', name: 'redirectToHome', component: RedirectToHomePlz},
@@ -19,6 +20,7 @@ const routes = [
   {path : '/dashboard', name: 'dashboard', component: dashboard},
   {path : '/profile', name: 'profile', component: profile},
   {path : '/results', name: 'results', component: results},
+  {path : '/search', name: 'search', component: search},
   {path : '/pdpa', name: 'pdpa', component: PDPA},
 ]
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="10e3bc2c-5642-4c3b-9971-77f9b7ba2ab1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/SunburstSetup/TechnicalToolsV2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ADRPrediction.iml" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/.idea/ADRPrediction.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HLA-ADR.csv" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/HLA-ADR.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HLA-ADR.db" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/HLA-ADR.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HLA-LA.output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/HLA-LA.output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReadCSV.py" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/ReadCSV.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TechnicalToolsV2.py" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/TechnicalToolsV2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database-setup.sql" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/database-setup.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql-setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/HLA-ADRSetup/sql-setup.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="2qh5R5KxmqJv7KonkXK6BI8fySH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/sirat/Code/ADR-Prediction/ADRDatabaseSetup/HistogramSetup"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-495700d161d3-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.22562.220" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="10e3bc2c-5642-4c3b-9971-77f9b7ba2ab1" name="Changes" comment="" />
+      <created>1735101954553</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1735101954553</updated>
+    </task>
+    <servers />
+  </component>
+</project>

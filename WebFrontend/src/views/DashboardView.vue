@@ -4,6 +4,7 @@ import { getAccountInfo, getSequences, backendLink} from "@/scripts/AccountFunc"
 import { ref } from "vue";
 import axios from "axios";
 import router from "@/router";
+import { ScrollTo } from "@/scripts/OtherFunc";
 import { sharedData } from "@/scripts/SharedData";
 
 
@@ -22,24 +23,23 @@ function gotoProfile()
   router.push({name:"profile"})
 }
 
-function scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
-      }
-}
-
 async function getReport(seq_id,label) 
 {
   let response = await axios
       .post(backendLink+"/api/getResults/hla_la", {
-        session_cookie: Cookies.get("session_cookie"),
+        cookie: Cookies.get("session_cookie"),
         label: label,
       })
       .catch(console.error);
   sharedData.sequenceLabel = label
   sharedData.sequenceId = seq_id
   sharedData.drugList = response.data
+  const genotypeList = new Set();
+  for (let item of response.data)
+  {
+    genotypeList.add(item.allele);
+  }
+  sharedData.genotypeList = Array.from(genotypeList);
   router.push("results")
 }
 
@@ -47,7 +47,7 @@ async function runTool(sequence_label)
 {
   let response = await axios
       .post(backendLink+"/api/run/hla_la", {
-        session_cookie: Cookies.get("session_cookie"),
+        cookie: Cookies.get("session_cookie"),
         label: sequence_label,
       })
       .catch(console.error);
@@ -107,7 +107,7 @@ addToSequenceList();
                 </th>
 
                 <th>
-                  <button class="btn bg-black-100 border-black-100" @click="scrollToSection('igvSection'); selectedSequence = i[1]"><p class="px-2"> View </p>
+                  <button class="btn bg-black-100 border-black-100" @click="ScrollTo('igvSection'); selectedSequence = i[1]"><p class="px-2"> View </p>
                     <svg fill="#000" class="h-5 w-5" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                       viewBox="0 0 488.85 488.85" xml:space="preserve">
                     <g>
@@ -182,10 +182,13 @@ addToSequenceList();
       
     </div>  
   </div>
-    <div id="igvSection" class="flex justify-center items-center h-144 w-full top-96">
+  <div id="igvSection" class="flex justify-center items-center h-144 w-full top-96">
     <div class="w-11/12 min-w-96 h-full bg-white shadow-md rounded-md">
-          <div class="flex items-center justify-center w-full h-32 inherit">
+      <div class="flex items-center justify-center w-full h-32 inherit">
         <h1 class="text-4xl font-bold link-hover"><a href="https://github.com/igvteam/igv.js/">IGV.js</a></h1>
+      </div>
+      <div class="flex items-center justify-center w-full h-96">
+        <div class="skeleton w-5/6 h-full"></div>
       </div>
     </div>
     </div>

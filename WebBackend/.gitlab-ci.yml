@@ -1,0 +1,57 @@
+stages:
+  - package
+  - deploy
+
+package stage:
+  stage: package
+  image: docker:20.10.17-git
+  services:
+    - docker:20.10.17-dind
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  only:
+    - master
+
+deploy stage:
+  stage: deploy
+  image: alpine:3.12
+  # environment:
+  #   name: development
+  # services:
+  #   - docker:19.03-dind
+  variables:
+    PROJECT: $CI_PROJECT_NAME
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  before_script:
+    # - apt-get update -qq
+    - apk update && apk upgrade
+    # - apt-get install -qq git
+    - apk add --no-cache bash git openssh
+    ## Setup SSH deploy keys
+    # - "which ssh-agent || ( apt-get install -qq openssh-client )"
+    - 'which ssh-agent || ( apk add --no-cache openssh-client )'
+    - eval $(ssh-agent -s)
+    # - bash -c "ssh-add <(echo '$SSH_PRIVATE_KEY')"
+    - echo "$SSH_PRIVATE_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+  script:
+    - export
+    # Generate file
+    - sed "s#IMAGE#$IMAGE_TAG#g; s#NAMESPACE#$SSH_USERNAME#g; s#PROJECT_NAME#$CI_PROJECT_NAME#g; s#OWNER_NAME#$GITLAB_USER_NAME#g; s#OWNER_EMAIL#$GITLAB_USER_EMAIL#g" deployment.template.yaml > deployment.yaml
+    # - sed "s#NAMESPACE#$CI_PROJECT_NAME#g; s#DOCKERCONFIGJSON#$DOCKERCONFIGJSON#g" setup.template.yaml > setup.yaml
+    # Create Folder
+    - echo $SSH_USERNAME,$PROJECT
+    - ssh -p 33001 $SSH_USERNAME@110.164.157.195 "cd ci-cd-deploys; if [ ! -d $PROJECT ]; then mkdir $PROJECT; fi"
+    # SFTP deployment & setup file
+    - scp -P 33001 deployment.yaml $SSH_USERNAME@110.164.157.195:/nbt_main/home/$SSH_USERNAME/ci-cd-deploys/$PROJECT
+    # - scp -P 33001 setup.yaml #SSH_USERNAME@110.164.157.195:/nbt_data/home/#SSH_USERNAME/ci-cd-deploys/$PROJECT
+    - ssh -p 33001 $SSH_USERNAME@110.164.157.195 "ssh gb-db-02 'cd ci-cd-deploys; cd $PROJECT; kubectl apply -f deployment.yaml'"
+  only:
+    - master

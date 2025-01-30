@@ -1,23 +1,19 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from TechnicalToolsV2 import log, sha256
-from file_handler import transform_file_for_igv, connect, disconnect, get_range_of_bam_file, get_adr, run, \
-    get_status_code, set_status_code, run_hla_la, format_hla_la, is_available, set_available
+from file_handler import *
 from time import time, sleep
+
+import SunburstChartSetup
 import secrets
 import shutil
 import sqlite3
 import os
 import threading
 import re
+import zipfile
 
 DATABASE_NAME = "users.db"  # go change in file_handler.py as well
-SESSION_DURATION = 1000000  # Seconds
-
-# status codes
-IDLE = 0
-WORKING = 1
-COMPLETED = 2
 
 CURRENT_FILE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))  # home/sirat/Code/ADR-Prediction/WebBackend/
 TYPING_TOOLS = ['hla_la', 'optitype', 'hisat_genotype', 'snp_bridge']
@@ -25,6 +21,14 @@ ASSOCIATED_FILETYPES = ['.bam', '.bam.bai', '.fq', '.sam']
 SINGLE_USE_TOKENS = {}  # token used for downloading user data from server
 app = Flask(__name__)
 CORS(app)
+
+# Increase file upload size limit
+app.config['MAX_CONTENT_LENGTH'] = 300 * 1024 * 1024  # 300 MB
+
+# status codes
+IDLE = 0
+WORKING = 1
+COMPLETED = 2
 
 
 def remove_token(token):
@@ -37,81 +41,32 @@ def remove_token(token):
 
 def check_valid_filename(name):
     max_size = 100
-    char_list = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', "'", '"', '<', '>', '/', '?', '[', ']', '|', ',',
-                 '|', '\\', '-', '=', ':', '{', '}', '`', '~', ' ']
-    pattern = re.compile('[' + re.escape(''.join(char_list)) + ']')
-
-    # Check if the filename contains any character from the list
-    if pattern.search(name) or len(name) > max_size:
-        return False
-    else:
-        return True
-
-
-def generate_session_cookie():
-    return f"{secrets.token_hex(16)}__{int(time())}"
-
-
-def get_account_info_from_db(cookie):
-    connection, cursor = connect()
-    cursor.execute("SELECT id,name,email FROM Users WHERE id = (SELECT user_id FROM Sessions WHERE token = ?)",
-                   (cookie,))
-    info = cursor.fetchone()
-    disconnect(connection, cursor)
-    return info
-
-
-def signup_into_database(name, email, password):
-    connection, cursor = connect()
-    hashed_password = password
-
-    cursor.execute(
-        "INSERT INTO Users (name, email, password_hash) VALUES (?,?,?);",
-        (name, email, hashed_password)
-    )
-
-    disconnect(connection, cursor)
-
-
-def check_value_in_column_exists(value, column_name):
-    connection, cursor = connect()
-    cursor.execute(f"SELECT EXISTS(SELECT 1 FROM Users WHERE {column_name} = ?) ", (value,))
-    exists = cursor.fetchone()[0]
-    disconnect(connection, cursor)
-    return exists == 1
+    return bool(re.fullmatch(r"[a-zA-Z0-9_]*", name)) and len(name) < max_size
 
 
 @app.route('/api/signup', methods=['POST'])
 def api_signup_handler():
-    data = request.json
+    data = request.json  # name email password
     log("Received signup data:", logtitle="POST REQUEST", var=data, color='yellow')
 
-    signup_into_database(data['name'], data['email'], data['password'])
+    user = UserSchema().load(data)
+    if user.add_user_to_db():
+        return jsonify(UserSchema().dump(user, include=["user_id", "name", "email"]))
 
-    return jsonify({"message": "Recieved Info!"})
+    return "Error during signup", 400
 
 
 @app.route('/api/login', methods=['POST'])
 def api_login_handler():
-    data = request.json
+    data = request.json  # email password
     log("Received login data:", logtitle="POST REQUEST", var=data, color='yellow')
 
-    if check_value_in_column_exists(data["email"], "email"):
-        connection, cursor = connect()
-        cursor.execute(f"SELECT id,password_hash FROM Users WHERE email = ? ", (data["email"],))
-        user_id, password = cursor.fetchone()
-        disconnect(connection, cursor)
-        if password == data["password"]:
-            session_cookie = generate_session_cookie()
+    user = UserSchema().load(data)
+    if not user.fetch_with_email_password():
+        return "Email or password is incorrect", 200
 
-            connection, cursor = connect()
-            cursor.execute(f"INSERT INTO Sessions (user_id,token,start_time,duration) VALUES (?,?,?,?)",
-                           (user_id, session_cookie, int(time()), SESSION_DURATION))
-            disconnect(connection, cursor)
-            log("Created cookie : ", var=session_cookie, color="green", logtitle="COOKIE MONSTER")
-            return jsonify({"success": True, "sessionCookie": session_cookie, "duration": SESSION_DURATION})
-
-    return jsonify({"success": False, "sessionCookie": None})
+    user.create_session()
+    return jsonify(UserSchema().dump(user, include=['user_id', 'name', 'email', 'cookie']))
 
 
 @app.route('/api/checkEmail', methods=['POST'])
@@ -123,104 +78,133 @@ def api_check_same_email():
 
 @app.route('/api/getAccountInfo', methods=['POST'])
 def api_get_account_info():
-    data = request.json
+    data = request.json  # cookie
     log("Requesting account info : ", logtitle="POST REQUEST", var=data, color='yellow')
-    # Check if session cookie exists
-    try:
-        data["session_cookie"]
-    except KeyError:
-        return jsonify({"id": None, "name": None, "email": None})
 
-    # Getting account info
-    info = get_account_info_from_db(data['session_cookie'])
+    user = UserSchema().load(data)
+    if user.cookie is None: return "No session cookie provided", 400
 
-    if info:
-        user_id, name, email = info
-        return jsonify({"id": user_id, "name": name, "email": email})
+    if user.fetch_with_cookie():
+        return jsonify(UserSchema().dump(user, include=["user_id", "name", "email"]))
     else:
-        log("Can't find cookie", logtitle="error", color="red")
-        return "Invalid session cookie", 401
+        return "Invalid cookie", 400
+
+
+@app.route('/api/changeAccountInfo', methods=['POST'])
+def api_change_account_info():
+    data = request.json  # cookie + other params that you want to change
+    log("Changing account info : ", logtitle="POST REQUEST", var=data, color='yellow')
+
+    old_user = UserSchema().load({"cookie": data["cookie"]})
+    if old_user.cookie is None: return "No session cookie provided", 400
+
+    if not old_user.fetch_with_cookie():
+        return "Invalid cookie", 400
+
+    new_user = UserSchema().load(data)
+    new_user.user_id = old_user.user_id
+
+    if new_user.change_user_info():
+        return "All provided values changed", 200
+    else:
+        return "Duplicate email", 400
 
 
 @app.route('/api/getSequences', methods=['POST'])
 def api_get_sequences():
-    data = request.json
+    data = request.json  # cookie
     log("Requesting sequences list : ", logtitle="POST REQUEST", var=data, color='yellow')
 
-    # Check if session cookie exists
-    try:
-        data["session_cookie"]
-    except KeyError:
-        return "No session cookie", 400
+    user = UserSchema().load(data)
+    if user.cookie is None: return "No session cookie provided", 400
+    if not user.fetch_with_cookie(): return "Invalid cookie", 400
 
-    # Getting account info
-    info = get_account_info_from_db(data['session_cookie'])
-
-    if not info:
-        log("Can't find cookie", logtitle="error", color="red")
-        return "Invalid session cookie", 401
-
-    user_id, name, email = info
     connection, cursor = connect()
     cursor.execute(
         "SELECT id,label,upload_time,igv,hla_la,hisat_genotype,optitype FROM User_sequences WHERE user_id = ?",
-        (user_id,))
+        (user.user_id,))
 
     return jsonify({"list": cursor.fetchall()})
 
 
-@app.route('/api/uploadFile', methods=['POST'])
+# Small file uploads ( <10 MB) and Large file uploads can use the same function.
+@app.route("/api/uploadFile", methods=["POST"])
 def api_upload_file():
-    if 'file' not in request.files:
-        return 'No file part', 400
+    if 'chunk' not in request.files: return 'No file chunk', 400
+    chunk = request.files['chunk']
+    filename = chunk.filename
+    chunk_index = int(request.form['chunk_index'])
+    total_chunks = int(request.form['total_chunk'])
+    is_paired = request.form["is_paired"].lower() == "true"  # Me and the bois hate FormData
 
-    file = request.files['file']
-
-    if file.filename == '':
-        return 'No selected file', 400
-
-    log("Requesting to upload file : ", logtitle="POST REQUEST", var=file.filename, color='yellow')
+    log("Requesting to upload file (chunk) : ", logtitle="POST REQUEST", var=chunk_index, color='yellow')
 
     # get account info
-    cookie = request.headers.get('Authorization').split('Bearer ')[-1]
-    info = get_account_info_from_db(cookie)
+    data = {"cookie": request.headers.get('Authorization').split('Bearer ')[-1]}
+    user = UserSchema().load(data)
+    if user.cookie is None: return "No session cookie provided", 400
+    if not user.fetch_with_cookie(): return "Invalid cookie", 400
 
-    if not info:
-        log("Invalid cookie", logtitle='error', color='red')
-        return "Invalid session cookie", 401
+    if not check_valid_filename(filename): return "Do not use symbols in the label", 400
 
-    user_id, name, email = info
+    if not os.path.exists(user.path):
+        os.makedirs(user.path)
+        log(f"Directory '{user.path}' created.")
 
-    # Make parent directory with user_id
-    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}"
-
+    # TODO: Make checker for duplicate directories
+    directory = os.path.join(user.path, filename)
     if not os.path.exists(directory):
         os.makedirs(directory)
         log(f"Directory '{directory}' created.")
 
-    filename = file.filename  # sequence label
-    # make sure it doesnt contain random symbol stuff
-    if not check_valid_filename(filename):
-        return "Do not use symbols in the label", 400
+    directory = os.path.join(directory, "chunk")
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+        log(f"Directory '{directory}' created.")
 
-    # Make sequence directory with label
+    chunk_path = os.path.join(directory, f"chunk_{chunk_index}")
+    chunk.save(chunk_path)
 
-    # make sure it doesn't override itself
-    while os.path.exists(f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/{filename}"):
-        filename += f'_{secrets.token_hex(1)}'
+    if len(os.listdir(directory)) != total_chunks:
+        return f'Chunk {chunk_index} received', 200
 
-    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/{filename}"
-    os.makedirs(directory)
-    log(f"Directory '{directory}' created.")
+    if not is_paired:
 
-    # Save the uploaded file to a designated location
-    file.save(f'{directory}/{filename}.fq')
+        final_path = os.path.join(user.path, f"{filename}/{filename}.fq")
+        with open(final_path, 'ab') as final_file:
+            for i in range(total_chunks):
+                path_to_connect = os.path.join(directory, f'chunk_{i}')
+                with open(path_to_connect, 'rb') as chunk_file:
+                    final_file.write(chunk_file.read())
+
+    else:
+        file_path = os.path.join(user.path, f"{filename}/{filename}.zip")
+        with open(file_path, 'ab') as final_file:
+            for i in range(total_chunks):
+                path_to_connect = os.path.join(directory, f'chunk_{i}')
+                with open(path_to_connect, 'rb') as chunk_file:
+                    final_file.write(chunk_file.read())
+
+        log("Preparing to unzip paired end reads", logtitle='INFO', var=filename, color='blue')
+        try:
+            with zipfile.ZipFile(file_path) as file:
+                zip_dir = os.path.join(user.path, f"{filename}/zip")
+                file.extractall(zip_dir)  # Extract all contents of file into zip
+                for index, _filename in enumerate(os.listdir(zip_dir)):
+                    # Rename the file to R1.fq, R2.fq
+                    run(f"mv '{zip_dir}/{_filename}' '{user.path}/{filename}/{filename}.R{index+1}.fq' ")
+        except zipfile.BadZipfile:
+            log("Invalid zip file", logtitle="erorr", var=filename, color="red")
+            return "Invalid zip file", 400
+
+    log("Large file upload completed", logtitle='success', var=filename, color='green')
     connection, cursor = connect()
-    cursor.execute("INSERT INTO User_sequences (user_id,label) VALUES (?,?)", (user_id, filename))
+    cursor.execute("INSERT INTO User_sequences (user_id,label) VALUES (?,?)", (user.user_id, filename))
     disconnect(connection, cursor)
 
-    threading.Thread(target=transform_file_for_igv, args=(f"uploads/{user_id}/{filename}", filename, user_id)).start()
-    return 'File uploaded successfully', 200
+    threading.Thread(target=transform_file_for_igv,
+                     args=(f"uploads/{user.user_id}/{filename}", filename, user.user_id)).start()
+    return 'Large file uploaded successfully', 200
 
 
 @app.route('/api/run/hla_la', methods=['POST'])
@@ -228,45 +212,38 @@ def api_run_hla_la():
     log("Requesting to run HLA-LA : ", logtitle="POST REQUEST", color='yellow')
 
     # get account info
-    cookie = request.json['session_cookie']
-    info = get_account_info_from_db(cookie)
+    data = request.json  # cookie label
+    user = UserSchema().load(data)
+    if user.cookie is None: return "No session cookie provided", 400
+    if not user.fetch_with_cookie(): return "Invalid cookie", 400
 
-    if not info:
-        log("Invalid cookie", logtitle='error', color='red')
-        return "Invalid session cookie", 401
-
-    user_id, name, email = info
     label = request.json["label"]
 
-    status = get_status_code(label, "hla_la", user_id)
+    status = get_status_code(label, "hla_la", user.user_id)
 
     if status == COMPLETED:
         return 'File already processed', 200
     elif status == WORKING:
         return 'File being processed', 200
 
-    if not is_available():
-        return "Another instance of HLA*LA is being ran please try again later", 200
-
-    threading.Thread(target=run_hla_la, args=(f"uploads/{user_id}/{label}", label, user_id)).start()
+    threading.Thread(target=run_hla_la, args=(f"uploads/{user.user_id}/{label}", label, user.user_id)).start()
     return 'Running HLA-LA', 200
 
 
 @app.route('/api/requestFile/igv', methods=['POST'])
 def api_request_file_igv():
-    sequence_label = request.json["label"]
-    cookie = request.json['session_cookie']
+    data = request.json
+    sequence_label = data["label"]
 
     log("Requesting file with label", var=sequence_label, logtitle='POST REQUEST', color='yellow')
-    # get user_id
-    info = get_account_info_from_db(cookie)
 
-    if not info:
-        log("Invalid cookie", logtitle='error', color='red')
-        return "Invalid session cookie", 401
+    # get account info
+    data = request.json
+    user = UserSchema().load(data)
+    if user.cookie is None: return "No session cookie provided", 400
+    if not user.fetch_with_cookie(): return "Invalid cookie", 400
 
-    user_id, name, email = info
-    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/{sequence_label}/igv"
+    directory = f"{user.path}/{sequence_label}/igv"
 
     if not os.path.exists(directory):
         log("Path doesn't exist", logtitle="error", color='red')
@@ -293,24 +270,21 @@ def api_request_file_igv():
 
 @app.route('/api/getResults/hla_la', methods=['POST'])
 def api_get_typing_results():
-    sequence_label = request.json["label"]
-    cookie = request.json['session_cookie']
+    data = request.json  # cookie label
+    sequence_label = data['label']
 
     log("Requesting typing results with label :", var=sequence_label, logtitle='POST REQUEST', color='yellow')
 
-    # get user_id
-    info = get_account_info_from_db(cookie)
+    # get account info
+    data = request.json
+    user = UserSchema().load(data)
+    if user.cookie is None: return "No session cookie provided", 400
+    if not user.fetch_with_cookie(): return "Invalid cookie", 400
 
-    if not info:
-        log("Invalid cookie", logtitle='error', color='red')
-        return "Invalid session cookie", 401
-
-    user_id, name, email = info
-
-    if get_status_code(sequence_label, "hla_la", user_id) != 2:
+    if get_status_code(sequence_label, "hla_la", user.user_id) != 2:
         return jsonify([]), 200
 
-    alleles = format_hla_la(f"/app/uploads/{user_id}/{sequence_label}/hla_la/out/hla/R1_bestguess_G.txt")
+    alleles = format_hla_la(f"{user.path}/{sequence_label}/hla_la/out/hla/R1_bestguess_G.txt")
     return_list = []
     for allele in alleles:
         return_list.extend(get_adr(allele))
@@ -320,27 +294,43 @@ def api_get_typing_results():
 
 @app.route('/api/deleteSequence', methods=['POST'])
 def api_delete_sequence():
-    sequence_label = request.json["label"]
-    cookie = request.json['session_cookie']
+    data = request.json
+    sequence_label = data["label"]
+
     log(f"Receiving delete sequence request with label :", var=sequence_label, logtitle="post request", color='yellow')
 
-    # get user_id
-    info = get_account_info_from_db(cookie)
+    # get account info
+    data = request.json
+    user = UserSchema().load(data)
+    if user.cookie is None: return "No session cookie provided", 400
+    if not user.fetch_with_cookie(): return "Invalid cookie", 400
 
-    if not info:
-        log("Invalid cookie", logtitle='error', color='red')
-        return "Invalid session cookie", 401
-
-    user_id, name, email = info
-
-    directory = f"{CURRENT_FILE_DIRECTORY}/uploads/{user_id}/{sequence_label}"
+    directory = f"{user.path}/{sequence_label}"
     shutil.rmtree(directory)
     log("Removed directory :", var=directory, logtitle="DELETE", color="red")
 
     connection, cursor = connect()
-    cursor.execute("DELETE FROM User_sequences WHERE user_id=? AND label=?", (user_id, sequence_label))
+    cursor.execute("DELETE FROM User_sequences WHERE user_id=? AND label=?", (user.user_id, sequence_label))
     disconnect(connection, cursor)
-    return "Successfully removed file(s)", 200
+    return "Successfully removed file", 200
+
+
+@app.route("/data/sunburst", methods=["POST"])
+def get_sunburst_data_using_filter():
+    data = request.json
+    countries = data["country_filter"]
+    minP = data["minP_filter"]
+    log('Receiving sunburst request with countries', var=countries, logtitle='post request', color='yellow')
+    return jsonify(SunburstChartSetup.get_data(countries, minP))
+
+
+@app.route("/statistic")
+def get_statistic():
+    connection, cursor = connect()
+    cursor.execute("SELECT MAX(id) from User_sequences;")
+    files_uploaded = cursor.fetchone()[0]
+    disconnect(connection, cursor)
+    return jsonify({"files_uploaded": files_uploaded}), 200
 
 
 @app.route('/download/<token>')
@@ -373,7 +363,6 @@ def file_chr6_fa():
 
 @app.route('/')
 def hello():
-    set_available()
     return "<b>Just checking if the backend works or not lol nice port number am I right :)</b>"
 
 

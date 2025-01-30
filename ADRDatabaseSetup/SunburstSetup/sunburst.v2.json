@@ -1,0 +1,3039 @@
+[
+  {
+    "name": "epilepsy",
+    "children": [
+      {
+        "name": "carbamazepine",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN),drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*07:02",
+                    "value": 54
+                  }
+                ]
+              },
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*02:07",
+                    "value": 716
+                  },
+                  {
+                    "name": "HLA-A*02:10",
+                    "value": 1
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*44:02",
+                    "value": 10
+                  },
+                  {
+                    "name": "HLA-B*57:01",
+                    "value": 112
+                  },
+                  {
+                    "name": "HLA-B*40:01",
+                    "value": 558
+                  },
+                  {
+                    "name": "HLA-B*51:01",
+                    "value": 305
+                  },
+                  {
+                    "name": "HLA-B*15:01",
+                    "value": 90
+                  },
+                  {
+                    "name": "HLA-B*27:05",
+                    "value": 24
+                  },
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*27:04",
+                    "value": 114
+                  },
+                  {
+                    "name": "HLA-B*48:01",
+                    "value": 33
+                  },
+                  {
+                    "name": "HLA-B*54:01",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*55:02",
+                    "value": 110
+                  },
+                  {
+                    "name": "HLA-B*15:11",
+                    "value": 22
+                  }
+                ]
+              },
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:03",
+                    "value": 697
+                  },
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*01:02",
+                    "value": 1194
+                  },
+                  {
+                    "name": "HLA-C*08:01",
+                    "value": 757
+                  },
+                  {
+                    "name": "HLA-C*03:03",
+                    "value": 182
+                  },
+                  {
+                    "name": "HLA-C*03:04",
+                    "value": 652
+                  },
+                  {
+                    "name": "HLA-C*06:02",
+                    "value": 330
+                  },
+                  {
+                    "name": "HLA-C*14:02",
+                    "value": 280
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*04:05",
+                    "value": 299
+                  },
+                  {
+                    "name": "HLA-DRB1*12:02",
+                    "value": 1204
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:03",
+                    "value": 697
+                  },
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*02:07",
+                    "value": 716
+                  }
+                ]
+              },
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*52:01",
+                    "value": 204
+                  },
+                  {
+                    "name": "HLA-B*57:01",
+                    "value": 112
+                  },
+                  {
+                    "name": "HLA-B*15:01",
+                    "value": 90
+                  },
+                  {
+                    "name": "HLA-B*27:04",
+                    "value": 114
+                  },
+                  {
+                    "name": "HLA-B*40:01",
+                    "value": 558
+                  },
+                  {
+                    "name": "HLA-B*48:01",
+                    "value": 33
+                  },
+                  {
+                    "name": "HLA-B*51:01",
+                    "value": 305
+                  },
+                  {
+                    "name": "HLA-B*54:01",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*55:02",
+                    "value": 110
+                  },
+                  {
+                    "name": "HLA-B*13:01",
+                    "value": 468
+                  },
+                  {
+                    "name": "HLA-B*15:11",
+                    "value": 22
+                  },
+                  {
+                    "name": "HLA-B*38:02",
+                    "value": 271
+                  },
+                  {
+                    "name": "HLA-B*46:01",
+                    "value": 970
+                  },
+                  {
+                    "name": "HLA-B*15:03",
+                    "value": 1
+                  },
+                  {
+                    "name": "HLA-B*15:25",
+                    "value": 160
+                  },
+                  {
+                    "name": "HLA-B*56:01",
+                    "value": 89
+                  },
+                  {
+                    "name": "HLA-B*56:10",
+                    "value": 1
+                  },
+                  {
+                    "name": "HLA-B*15:21",
+                    "value": 44
+                  },
+                  {
+                    "name": "HLA-B*15:35",
+                    "value": 52
+                  },
+                  {
+                    "name": "HLA-B*18:01",
+                    "value": 266
+                  },
+                  {
+                    "name": "HLA-B*18:02",
+                    "value": 155
+                  },
+                  {
+                    "name": "HLA-B*27:06",
+                    "value": 161
+                  },
+                  {
+                    "name": "HLA-B*35:05",
+                    "value": 173
+                  },
+                  {
+                    "name": "HLA-B*39:09",
+                    "value": 106
+                  },
+                  {
+                    "name": "HLA-B*51:02",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*01:02",
+                    "value": 1194
+                  },
+                  {
+                    "name": "HLA-C*08:01",
+                    "value": 757
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*04:05",
+                    "value": 299
+                  },
+                  {
+                    "name": "HLA-DRB1*12:02",
+                    "value": 1204
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "maculopapular exanthema (MPE)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*15:01",
+                    "value": 90
+                  },
+                  {
+                    "name": "HLA-B*27:04",
+                    "value": 114
+                  },
+                  {
+                    "name": "HLA-B*40:01",
+                    "value": 558
+                  },
+                  {
+                    "name": "HLA-B*48:01",
+                    "value": 33
+                  },
+                  {
+                    "name": "HLA-B*51:01",
+                    "value": 305
+                  },
+                  {
+                    "name": "HLA-B*54:01",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*55:02",
+                    "value": 110
+                  },
+                  {
+                    "name": "HLA-B*46:01",
+                    "value": 970
+                  },
+                  {
+                    "name": "HLA-B*13:01",
+                    "value": 468
+                  },
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  },
+                  {
+                    "name": "HLA-B*38:02",
+                    "value": 271
+                  },
+                  {
+                    "name": "HLA-B*15:11",
+                    "value": 22
+                  },
+                  {
+                    "name": "HLA-B*07:02",
+                    "value": 54
+                  }
+                ]
+              },
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:03",
+                    "value": 697
+                  },
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*02:07",
+                    "value": 716
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*01:02",
+                    "value": 1194
+                  },
+                  {
+                    "name": "HLA-C*08:01",
+                    "value": 757
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*04:05",
+                    "value": 299
+                  },
+                  {
+                    "name": "HLA-DRB1*12:02",
+                    "value": 1204
+                  },
+                  {
+                    "name": "HLA-DRB1*09:01",
+                    "value": 726
+                  },
+                  {
+                    "name": "HLA-DRB1*15:01",
+                    "value": 599
+                  },
+                  {
+                    "name": "HLA-DRB1*14:05",
+                    "value": 51
+                  },
+                  {
+                    "name": "HLA-DRB1*08:03",
+                    "value": 137
+                  },
+                  {
+                    "name": "HLA-DRB1*01:01",
+                    "value": 31
+                  },
+                  {
+                    "name": "HLA-DRB1*03:01",
+                    "value": 448
+                  },
+                  {
+                    "name": "HLA-DRB1*16:02",
+                    "value": 374
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Stevens-Johnson syndrome (SJS)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  }
+                ]
+              },
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*15:01",
+                    "value": 90
+                  },
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*15:11",
+                    "value": 22
+                  },
+                  {
+                    "name": "HLA-B*51:01",
+                    "value": 305
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*01:02",
+                    "value": 1194
+                  },
+                  {
+                    "name": "HLA-C*03:03",
+                    "value": 182
+                  },
+                  {
+                    "name": "HLA-C*03:04",
+                    "value": 652
+                  },
+                  {
+                    "name": "HLA-C*06:02",
+                    "value": 330
+                  },
+                  {
+                    "name": "HLA-C*14:02",
+                    "value": 280
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "drug-induced skin reaction (DISI)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  }
+                ]
+              },
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*15:01",
+                    "value": 90
+                  },
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*15:11",
+                    "value": 22
+                  },
+                  {
+                    "name": "HLA-B*51:01",
+                    "value": 305
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*01:02",
+                    "value": 1194
+                  },
+                  {
+                    "name": "HLA-C*03:03",
+                    "value": 182
+                  },
+                  {
+                    "name": "HLA-C*03:04",
+                    "value": 652
+                  },
+                  {
+                    "name": "HLA-C*06:02",
+                    "value": 330
+                  },
+                  {
+                    "name": "HLA-C*14:02",
+                    "value": 280
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN),drug-induced hypersensitivity syndrome (DIHS),maculopapular exanthema (MPE)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*07:02",
+                    "value": 54
+                  },
+                  {
+                    "name": "HLA-B*13:01",
+                    "value": 468
+                  },
+                  {
+                    "name": "HLA-B*13:02",
+                    "value": 148
+                  },
+                  {
+                    "name": "HLA-B*13:10",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*15:01",
+                    "value": 90
+                  },
+                  {
+                    "name": "HLA-B*15:07",
+                    "value": 19
+                  },
+                  {
+                    "name": "HLA-B*15:11",
+                    "value": 22
+                  },
+                  {
+                    "name": "HLA-B*15:18",
+                    "value": 17
+                  },
+                  {
+                    "name": "HLA-B*27:04",
+                    "value": 114
+                  },
+                  {
+                    "name": "HLA-B*35:01",
+                    "value": 74
+                  },
+                  {
+                    "name": "HLA-B*37:01",
+                    "value": 56
+                  },
+                  {
+                    "name": "HLA-B*39:04",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*40:01",
+                    "value": 558
+                  },
+                  {
+                    "name": "HLA-B*40:02",
+                    "value": 93
+                  },
+                  {
+                    "name": "HLA-B*40:06",
+                    "value": 111
+                  },
+                  {
+                    "name": "HLA-B*44:03",
+                    "value": 339
+                  },
+                  {
+                    "name": "HLA-B*46:01",
+                    "value": 970
+                  },
+                  {
+                    "name": "HLA-B*48:01",
+                    "value": 33
+                  },
+                  {
+                    "name": "HLA-B*51:01",
+                    "value": 305
+                  },
+                  {
+                    "name": "HLA-B*52:01",
+                    "value": 204
+                  },
+                  {
+                    "name": "HLA-B*54:01",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*55:02",
+                    "value": 110
+                  },
+                  {
+                    "name": "HLA-B*56:01",
+                    "value": 89
+                  },
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  },
+                  {
+                    "name": "HLA-B*59:01",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*67:01",
+                    "value": 5
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "lamotrigine",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*38:01",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "maculopapular exanthema (MPE)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*46:01",
+                    "value": 970
+                  },
+                  {
+                    "name": "HLA-B*51:01",
+                    "value": 305
+                  },
+                  {
+                    "name": "HLA-B*40:01",
+                    "value": 558
+                  },
+                  {
+                    "name": "HLA-B*13:02",
+                    "value": 148
+                  },
+                  {
+                    "name": "HLA-B*13:01",
+                    "value": 468
+                  },
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  },
+                  {
+                    "name": "HLA-B*54:01",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*38:02",
+                    "value": 271
+                  },
+                  {
+                    "name": "HLA-B*15:11",
+                    "value": 22
+                  },
+                  {
+                    "name": "HLA-B*07:02",
+                    "value": 54
+                  }
+                ]
+              },
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:03",
+                    "value": 697
+                  },
+                  {
+                    "name": "HLA-A*02:07",
+                    "value": 716
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*09:01",
+                    "value": 726
+                  },
+                  {
+                    "name": "HLA-DRB1*04:05",
+                    "value": 299
+                  },
+                  {
+                    "name": "HLA-DRB1*12:02",
+                    "value": 1204
+                  },
+                  {
+                    "name": "HLA-DRB1*15:01",
+                    "value": 599
+                  },
+                  {
+                    "name": "HLA-DRB1*07:01",
+                    "value": 445
+                  },
+                  {
+                    "name": "HLA-DRB1*08:03",
+                    "value": 137
+                  },
+                  {
+                    "name": "HLA-DRB1*16:02",
+                    "value": 374
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN),drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  },
+                  {
+                    "name": "HLA-B*57:01",
+                    "value": 112
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*07:18",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DQB1",
+                "children": [
+                  {
+                    "name": "HLA-DQB1*06:09",
+                    "value": 88
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*13:01",
+                    "value": 52
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Stevens-Johnson syndrome (SJS),maculopapular exanthema (MPE)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*07:05",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-B*13:01",
+                    "value": 468
+                  },
+                  {
+                    "name": "HLA-B*13:02",
+                    "value": 148
+                  },
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*15:03",
+                    "value": 1
+                  },
+                  {
+                    "name": "HLA-B*15:27",
+                    "value": 25
+                  },
+                  {
+                    "name": "HLA-B*39:01",
+                    "value": 56
+                  },
+                  {
+                    "name": "HLA-B*40:01",
+                    "value": 558
+                  },
+                  {
+                    "name": "HLA-B*44:03",
+                    "value": 339
+                  },
+                  {
+                    "name": "HLA-B*46:01",
+                    "value": 970
+                  },
+                  {
+                    "name": "HLA-B*48:01",
+                    "value": 33
+                  },
+                  {
+                    "name": "HLA-B*54:01",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*54:17",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  },
+                  {
+                    "name": "HLA-B*15:19",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*44:08",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*55:01",
+                    "value": 16
+                  },
+                  {
+                    "name": "HLA-B*55:02",
+                    "value": 110
+                  },
+                  {
+                    "name": "HLA-B*81:01",
+                    "value": 4
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "phenytoin",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*13:01",
+                    "value": 468
+                  },
+                  {
+                    "name": "HLA-B*15:25",
+                    "value": 160
+                  },
+                  {
+                    "name": "HLA-B*35:01",
+                    "value": 74
+                  },
+                  {
+                    "name": "HLA-B*38:02",
+                    "value": 271
+                  },
+                  {
+                    "name": "HLA-B*40:01",
+                    "value": 558
+                  },
+                  {
+                    "name": "HLA-B*40:06",
+                    "value": 111
+                  },
+                  {
+                    "name": "HLA-B*46:01",
+                    "value": 970
+                  },
+                  {
+                    "name": "HLA-B*46:02",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*51:01",
+                    "value": 305
+                  },
+                  {
+                    "name": "HLA-B*51:02",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*52:01",
+                    "value": 204
+                  },
+                  {
+                    "name": "HLA-B*54:01",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*56:01",
+                    "value": 89
+                  },
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  },
+                  {
+                    "name": "HLA-B*67:01",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:03",
+                    "value": 697
+                  },
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*02:07",
+                    "value": 716
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*01:02",
+                    "value": 1194
+                  },
+                  {
+                    "name": "HLA-C*03:02",
+                    "value": 551
+                  },
+                  {
+                    "name": "HLA-C*03:03",
+                    "value": 182
+                  },
+                  {
+                    "name": "HLA-C*03:04",
+                    "value": 652
+                  },
+                  {
+                    "name": "HLA-C*04:01",
+                    "value": 392
+                  },
+                  {
+                    "name": "HLA-C*04:03",
+                    "value": 291
+                  },
+                  {
+                    "name": "HLA-C*07:02",
+                    "value": 1226
+                  },
+                  {
+                    "name": "HLA-C*08:01",
+                    "value": 757
+                  },
+                  {
+                    "name": "HLA-C*12:02",
+                    "value": 256
+                  },
+                  {
+                    "name": "HLA-C*14:02",
+                    "value": 280
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*03:01",
+                    "value": 448
+                  },
+                  {
+                    "name": "HLA-DRB1*03:17",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-DRB1*04:03",
+                    "value": 109
+                  },
+                  {
+                    "name": "HLA-DRB1*04:05",
+                    "value": 299
+                  },
+                  {
+                    "name": "HLA-DRB1*04:06",
+                    "value": 110
+                  },
+                  {
+                    "name": "HLA-DRB1*08:03",
+                    "value": 137
+                  },
+                  {
+                    "name": "HLA-DRB1*09:01",
+                    "value": 726
+                  },
+                  {
+                    "name": "HLA-DRB1*11:01",
+                    "value": 179
+                  },
+                  {
+                    "name": "HLA-DRB1*12:01",
+                    "value": 75
+                  },
+                  {
+                    "name": "HLA-DRB1*12:02",
+                    "value": 1204
+                  },
+                  {
+                    "name": "HLA-DRB1*13:02",
+                    "value": 118
+                  },
+                  {
+                    "name": "HLA-DRB1*13:12",
+                    "value": 86
+                  },
+                  {
+                    "name": "HLA-DRB1*14:01",
+                    "value": 320
+                  },
+                  {
+                    "name": "HLA-DRB1*14:43",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-DRB1*15:01",
+                    "value": 599
+                  },
+                  {
+                    "name": "HLA-DRB1*15:02",
+                    "value": 917
+                  },
+                  {
+                    "name": "HLA-DRB1*16:02",
+                    "value": 374
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Stevens-Johnson syndrome (SJS)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "maculopapular eruption (MPE)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "fixed drug eruption",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "valproic acid",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "phenobarbital",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "antiepileptic drugs",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*02:07",
+                    "value": 716
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN),drug-induced hypersensitivity syndrome (DIHS),acute generalized exanthematous pustulosis (AGEP)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*01:03",
+                    "value": 5
+                  },
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:05",
+                    "value": 8
+                  },
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*02:08",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-A*02:11",
+                    "value": 23
+                  },
+                  {
+                    "name": "HLA-A*02:12",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-A*02:81",
+                    "value": 1
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "oxcarbazepine",
+        "children": [
+          {
+            "name": "maculopapular exanthema (MPE)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*13:02",
+                    "value": 148
+                  },
+                  {
+                    "name": "HLA-B*15:01",
+                    "value": 90
+                  },
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*15:27",
+                    "value": 25
+                  },
+                  {
+                    "name": "HLA-B*27:04",
+                    "value": 114
+                  },
+                  {
+                    "name": "HLA-B*40:01",
+                    "value": 558
+                  },
+                  {
+                    "name": "HLA-B*46:01",
+                    "value": 970
+                  },
+                  {
+                    "name": "HLA-B*51:01",
+                    "value": 305
+                  },
+                  {
+                    "name": "HLA-B*54:01",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*56:04",
+                    "value": 44
+                  },
+                  {
+                    "name": "HLA-B*15:19",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*27:09",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*39:05",
+                    "value": 6
+                  },
+                  {
+                    "name": "HLA-B*48:04",
+                    "value": 1
+                  },
+                  {
+                    "name": "HLA-B*49:01",
+                    "value": 4
+                  },
+                  {
+                    "name": "HLA-B*07:05",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-B*13:01",
+                    "value": 468
+                  },
+                  {
+                    "name": "HLA-B*15:11",
+                    "value": 22
+                  },
+                  {
+                    "name": "HLA-B*15:13",
+                    "value": 55
+                  },
+                  {
+                    "name": "HLA-B*15:58",
+                    "value": 1
+                  },
+                  {
+                    "name": "HLA-B*27:05",
+                    "value": 24
+                  },
+                  {
+                    "name": "HLA-B*35:08",
+                    "value": 5
+                  },
+                  {
+                    "name": "HLA-B*38:01",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*38:02",
+                    "value": 271
+                  },
+                  {
+                    "name": "HLA-B*39:01",
+                    "value": 56
+                  },
+                  {
+                    "name": "HLA-B*40:06",
+                    "value": 111
+                  },
+                  {
+                    "name": "HLA-B*44:02",
+                    "value": 10
+                  },
+                  {
+                    "name": "HLA-B*44:03",
+                    "value": 339
+                  },
+                  {
+                    "name": "HLA-B*48:01",
+                    "value": 33
+                  },
+                  {
+                    "name": "HLA-B*51:02",
+                    "value": 68
+                  },
+                  {
+                    "name": "HLA-B*52:01",
+                    "value": 204
+                  },
+                  {
+                    "name": "HLA-B*55:01",
+                    "value": 16
+                  },
+                  {
+                    "name": "HLA-B*55:02",
+                    "value": 110
+                  },
+                  {
+                    "name": "HLA-B*56:01",
+                    "value": 89
+                  },
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  },
+                  {
+                    "name": "HLA-B*15:42",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*35:31",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*47:01",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*53:01",
+                    "value": 5
+                  },
+                  {
+                    "name": "HLA-B*13:15",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*37:10",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "levetiracetam",
+        "children": [
+          {
+            "name": "maculopapular eruption (MPE)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "HIV",
+    "children": [
+      {
+        "name": "abacavir",
+        "children": [
+          {
+            "name": "drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*57:01",
+                    "value": 112
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*07:01",
+                    "value": 445
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "nevirapine",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*04:01",
+                    "value": 392
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "maculopapular exanthema (MPE)",
+            "children": [
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*04:01",
+                    "value": 392
+                  },
+                  {
+                    "name": "HLA-C*07:02",
+                    "value": 1226
+                  }
+                ]
+              },
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*35:05",
+                    "value": 173
+                  },
+                  {
+                    "name": "HLA-B*38:02",
+                    "value": 271
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*12:02",
+                    "value": 1204
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*07:05",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-B*15:10",
+                    "value": 1
+                  },
+                  {
+                    "name": "HLA-B*18:01",
+                    "value": 266
+                  },
+                  {
+                    "name": "HLA-B*35:01",
+                    "value": 74
+                  },
+                  {
+                    "name": "HLA-B*35:05",
+                    "value": 173
+                  },
+                  {
+                    "name": "HLA-B*41:01",
+                    "value": 5
+                  },
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  },
+                  {
+                    "name": "HLA-B*58:02",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*02:10",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-C*03:02",
+                    "value": 551
+                  },
+                  {
+                    "name": "HLA-C*03:04",
+                    "value": 652
+                  },
+                  {
+                    "name": "HLA-C*06:02",
+                    "value": 330
+                  },
+                  {
+                    "name": "HLA-C*12:03",
+                    "value": 108
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*01:01",
+                    "value": 31
+                  },
+                  {
+                    "name": "HLA-DRB1*01:02",
+                    "value": 3
+                  },
+                  {
+                    "name": "HLA-DRB1*03:01",
+                    "value": 448
+                  },
+                  {
+                    "name": "HLA-DRB1*14:01",
+                    "value": 320
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "schizophrenia",
+    "children": [
+      {
+        "name": "clozapine",
+        "children": [
+          {
+            "name": "agranulocytosis",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01",
+                    "value": 3049
+                  },
+                  {
+                    "name": "HLA-A*02",
+                    "value": 2970
+                  },
+                  {
+                    "name": "HLA-A*03",
+                    "value": 1770
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "gout",
+    "children": [
+      {
+        "name": "allopurinol",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  },
+                  {
+                    "name": "HLA-B*41:01",
+                    "value": 5
+                  },
+                  {
+                    "name": "HLA-B*13:01",
+                    "value": 468
+                  },
+                  {
+                    "name": "HLA-B*15:02",
+                    "value": 621
+                  },
+                  {
+                    "name": "HLA-B*18:02",
+                    "value": 155
+                  },
+                  {
+                    "name": "HLA-B*38:02",
+                    "value": 271
+                  },
+                  {
+                    "name": "HLA-B*40:01",
+                    "value": 558
+                  },
+                  {
+                    "name": "HLA-B*46:01",
+                    "value": 970
+                  },
+                  {
+                    "name": "HLA-B*51:01",
+                    "value": 305
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*03:02",
+                    "value": 551
+                  },
+                  {
+                    "name": "HLA-C*08:01",
+                    "value": 757
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*15:02",
+                    "value": 917
+                  },
+                  {
+                    "name": "HLA-DRB1*04:05",
+                    "value": 299
+                  },
+                  {
+                    "name": "HLA-DRB1*11:01",
+                    "value": 179
+                  },
+                  {
+                    "name": "HLA-DRB1*13:02",
+                    "value": 118
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DQB1",
+                "children": [
+                  {
+                    "name": "HLA-DQB1*02:02",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "maculopapular exanthema (MPE)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*03:02",
+                    "value": 551
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "drug-induced hypersensitivity syndrome (DIHS),Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN),drug-induced skin reaction (DISI)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN),drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*03:02",
+                    "value": 551
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*03:01",
+                    "value": 448
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "drug-induced skin reaction (DISI)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*03:02",
+                    "value": 551
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "other",
+    "children": [
+      {
+        "name": "Acetylsalicylic acid",
+        "children": [
+          {
+            "name": "aspirin-intolerant asthma (AIA)",
+            "children": [
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*01:01",
+                    "value": 31
+                  },
+                  {
+                    "name": "HLA-DRB1*03:01",
+                    "value": 448
+                  },
+                  {
+                    "name": "HLA-DRB1*09:01",
+                    "value": 726
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DQB1",
+                "children": [
+                  {
+                    "name": "HLA-DQB1*05:01",
+                    "value": 872
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DPB1",
+                "children": [
+                  {
+                    "name": "HLA-DPB1*03:01",
+                    "value": 515
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "aspirin-induced urticaria (AIU)",
+            "children": [
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*01:01",
+                    "value": 31
+                  },
+                  {
+                    "name": "HLA-DRB1*04:05",
+                    "value": 299
+                  },
+                  {
+                    "name": "HLA-DRB1*07:01",
+                    "value": 445
+                  },
+                  {
+                    "name": "HLA-DRB1*08:03",
+                    "value": 137
+                  },
+                  {
+                    "name": "HLA-DRB1*09:01",
+                    "value": 726
+                  },
+                  {
+                    "name": "HLA-DRB1*11:01",
+                    "value": 179
+                  },
+                  {
+                    "name": "HLA-DRB1*12:01",
+                    "value": 75
+                  },
+                  {
+                    "name": "HLA-DRB1*12:02",
+                    "value": 1204
+                  },
+                  {
+                    "name": "HLA-DRB1*13:02",
+                    "value": 118
+                  },
+                  {
+                    "name": "HLA-DRB1*15:01",
+                    "value": 599
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DQB1",
+                "children": [
+                  {
+                    "name": "HLA-DQB1*05:01",
+                    "value": 872
+                  },
+                  {
+                    "name": "HLA-DQB1*05:03",
+                    "value": 342
+                  },
+                  {
+                    "name": "HLA-DQB1*06:01",
+                    "value": 595
+                  },
+                  {
+                    "name": "HLA-DQB1*06:04",
+                    "value": 31
+                  },
+                  {
+                    "name": "HLA-DQB1*06:09",
+                    "value": 88
+                  },
+                  {
+                    "name": "HLA-DQB1*03:01",
+                    "value": 1468
+                  },
+                  {
+                    "name": "HLA-DQB1*03:02",
+                    "value": 365
+                  },
+                  {
+                    "name": "HLA-DQB1*03:03",
+                    "value": 916
+                  },
+                  {
+                    "name": "HLA-DQB1*04:01",
+                    "value": 261
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DPB1",
+                "children": [
+                  {
+                    "name": "HLA-DPB1*02:01",
+                    "value": 837
+                  },
+                  {
+                    "name": "HLA-DPB1*02:02",
+                    "value": 482
+                  },
+                  {
+                    "name": "HLA-DPB1*03:01",
+                    "value": 515
+                  },
+                  {
+                    "name": "HLA-DPB1*04:01",
+                    "value": 886
+                  },
+                  {
+                    "name": "HLA-DPB1*04:02",
+                    "value": 325
+                  },
+                  {
+                    "name": "HLA-DPB1*05:01",
+                    "value": 1828
+                  },
+                  {
+                    "name": "HLA-DPB1*09:01",
+                    "value": 90
+                  },
+                  {
+                    "name": "HLA-DPB1*13:01",
+                    "value": 1245
+                  },
+                  {
+                    "name": "HLA-DPB1*14:01",
+                    "value": 238
+                  },
+                  {
+                    "name": "HLA-DPB1*17:01",
+                    "value": 109
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Acetaminophen",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*41:01",
+                    "value": 5
+                  },
+                  {
+                    "name": "HLA-B*58:01",
+                    "value": 547
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*03:02",
+                    "value": 551
+                  },
+                  {
+                    "name": "HLA-C*08:01",
+                    "value": 757
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*15:02",
+                    "value": 917
+                  },
+                  {
+                    "name": "HLA-DRB1*04:05",
+                    "value": 299
+                  },
+                  {
+                    "name": "HLA-DRB1*11:01",
+                    "value": 179
+                  },
+                  {
+                    "name": "HLA-DRB1*13:02",
+                    "value": 118
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DQB1",
+                "children": [
+                  {
+                    "name": "HLA-DQB1*02:02",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ticlopidine",
+        "children": [
+          {
+            "name": "drug induced liver injury (DILI) - cholestatic",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*44:03",
+                    "value": 339
+                  }
+                ]
+              },
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*14:03",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*13:02",
+                    "value": 118
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DQB1",
+                "children": [
+                  {
+                    "name": "HLA-DQB1*06:04",
+                    "value": 31
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "NSAID and 'multi-ingredient cold medication'",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN),severe ocular surface complications",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "sulfasalazine",
+        "children": [
+          {
+            "name": "drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*02:07",
+                    "value": 716
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cancer",
+    "children": [
+      {
+        "name": "EGF receptor inhibitors",
+        "children": [
+          {
+            "name": "maculopapular exanthema (MPE)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bacterial infections",
+    "children": [
+      {
+        "name": "flucloxacillin",
+        "children": [
+          {
+            "name": "drug induced liver injury (DILI)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*57:01",
+                    "value": 112
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*07:01",
+                    "value": 445
+                  },
+                  {
+                    "name": "HLA-DRB1*01",
+                    "value": 3082
+                  },
+                  {
+                    "name": "HLA-DRB1*03",
+                    "value": 708
+                  },
+                  {
+                    "name": "HLA-DRB1*04",
+                    "value": 944
+                  },
+                  {
+                    "name": "HLA-DRB1*08",
+                    "value": 196
+                  },
+                  {
+                    "name": "HLA-DRB1*09",
+                    "value": 743
+                  },
+                  {
+                    "name": "HLA-DRB1*10",
+                    "value": 183
+                  },
+                  {
+                    "name": "HLA-DRB1*11",
+                    "value": 369
+                  },
+                  {
+                    "name": "HLA-DRB1*13",
+                    "value": 389
+                  },
+                  {
+                    "name": "HLA-DRB1*14",
+                    "value": 629
+                  },
+                  {
+                    "name": "HLA-DRB1*15",
+                    "value": 1699
+                  },
+                  {
+                    "name": "HLA-DRB1*16",
+                    "value": 399
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "amoxicillin-clavulanate",
+        "children": [
+          {
+            "name": "drug induced liver injury (DILI)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*01:02",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:02",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-A*02:05",
+                    "value": 8
+                  },
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "jaundice",
+            "children": [
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*15:01",
+                    "value": 599
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "drug induced liver injury (DILI) - hepatocellular type of damage",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*18:01",
+                    "value": 266
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "drug induced liver injury (DILI) - cholestatic/mixed type of damage",
+            "children": [
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*15:01",
+                    "value": 599
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DQB1",
+                "children": [
+                  {
+                    "name": "HLA-DQB1*06:02",
+                    "value": 105
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "antibacterial drugs",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN),drug-induced hypersensitivity syndrome (DIHS),acute generalized exanthematous pustulosis (AGEP)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*01:03",
+                    "value": 5
+                  },
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:05",
+                    "value": 8
+                  },
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*02:08",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-A*02:11",
+                    "value": 23
+                  },
+                  {
+                    "name": "HLA-A*02:12",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-A*02:81",
+                    "value": 1
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "clarithromycin",
+        "children": [
+          {
+            "name": "drug-induced skin reaction (DISI)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*02:07",
+                    "value": 716
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "sulfamethoxazole",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*38:01",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-B*38:02",
+                    "value": 271
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "rheumatoid arthritis",
+    "children": [
+      {
+        "name": "bucillamine",
+        "children": [
+          {
+            "name": "bucillamine-induced proteinuria",
+            "children": [
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*01:01",
+                    "value": 31
+                  },
+                  {
+                    "name": "HLA-DRB1*04:01",
+                    "value": 13
+                  },
+                  {
+                    "name": "HLA-DRB1*04:03",
+                    "value": 109
+                  },
+                  {
+                    "name": "HLA-DRB1*04:05",
+                    "value": 299
+                  },
+                  {
+                    "name": "HLA-DRB1*04:06",
+                    "value": 110
+                  },
+                  {
+                    "name": "HLA-DRB1*04:10",
+                    "value": 8
+                  },
+                  {
+                    "name": "HLA-DRB1*08:02",
+                    "value": 14
+                  },
+                  {
+                    "name": "HLA-DRB1*08:03",
+                    "value": 137
+                  },
+                  {
+                    "name": "HLA-DRB1*09:01",
+                    "value": 726
+                  },
+                  {
+                    "name": "HLA-DRB1*11:01",
+                    "value": 179
+                  },
+                  {
+                    "name": "HLA-DRB1*12:01",
+                    "value": 75
+                  },
+                  {
+                    "name": "HLA-DRB1*12:02",
+                    "value": 1204
+                  },
+                  {
+                    "name": "HLA-DRB1*13:02",
+                    "value": 118
+                  },
+                  {
+                    "name": "HLA-DRB1*14:03",
+                    "value": 5
+                  },
+                  {
+                    "name": "HLA-DRB1*14:06",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-DRB1*14:54",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-DRB1*15:01",
+                    "value": 599
+                  },
+                  {
+                    "name": "HLA-DRB1*15:02",
+                    "value": 917
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DQB1",
+                "children": [
+                  {
+                    "name": "HLA-DQB1*03:01",
+                    "value": 1468
+                  },
+                  {
+                    "name": "HLA-DQB1*03:02",
+                    "value": 365
+                  },
+                  {
+                    "name": "HLA-DQB1*03:03",
+                    "value": 916
+                  },
+                  {
+                    "name": "HLA-DQB1*04:01",
+                    "value": 261
+                  },
+                  {
+                    "name": "HLA-DQB1*04:02",
+                    "value": 82
+                  },
+                  {
+                    "name": "HLA-DQB1*05:01",
+                    "value": 872
+                  },
+                  {
+                    "name": "HLA-DQB1*05:02",
+                    "value": 1325
+                  },
+                  {
+                    "name": "HLA-DQB1*05:03",
+                    "value": 342
+                  },
+                  {
+                    "name": "HLA-DQB1*06:01",
+                    "value": 595
+                  },
+                  {
+                    "name": "HLA-DQB1*06:02",
+                    "value": 105
+                  },
+                  {
+                    "name": "HLA-DQB1*06:04",
+                    "value": 31
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DPB1",
+                "children": [
+                  {
+                    "name": "HLA-DPB1*02:01",
+                    "value": 837
+                  },
+                  {
+                    "name": "HLA-DPB1*02:02",
+                    "value": 482
+                  },
+                  {
+                    "name": "HLA-DPB1*03:01",
+                    "value": 515
+                  },
+                  {
+                    "name": "HLA-DPB1*04:01",
+                    "value": 886
+                  },
+                  {
+                    "name": "HLA-DPB1*04:02",
+                    "value": 325
+                  },
+                  {
+                    "name": "HLA-DPB1*05:01",
+                    "value": 1828
+                  },
+                  {
+                    "name": "HLA-DPB1*09:01",
+                    "value": 90
+                  },
+                  {
+                    "name": "HLA-DPB1*13:01",
+                    "value": 1245
+                  },
+                  {
+                    "name": "HLA-DPB1*14:01",
+                    "value": 238
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "common cold",
+    "children": [
+      {
+        "name": "NSAID and 'multi-ingredient cold medication'",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN),severe occular complicatoins",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*01:01",
+                    "value": 186
+                  },
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:02",
+                    "value": 0
+                  },
+                  {
+                    "name": "HLA-A*02:05",
+                    "value": 8
+                  },
+                  {
+                    "name": "HLA-A*03:01",
+                    "value": 56
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "tetanus",
+    "children": [
+      {
+        "name": "tetanus antitoxin",
+        "children": [
+          {
+            "name": "maculopapular eruption (MPE)",
+            "children": [
+              {
+                "name": "HLA-A",
+                "children": [
+                  {
+                    "name": "HLA-A*02:01",
+                    "value": 308
+                  },
+                  {
+                    "name": "HLA-A*02:06",
+                    "value": 164
+                  },
+                  {
+                    "name": "HLA-A*02:07",
+                    "value": 716
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "tuberculosis",
+    "children": [
+      {
+        "name": "antituberculosis drugs",
+        "children": [
+          {
+            "name": "drug-induced hypersensitivity syndrome (DIHS)",
+            "children": [
+              {
+                "name": "HLA-C",
+                "children": [
+                  {
+                    "name": "HLA-C*04:01",
+                    "value": 392
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "inflammation",
+    "children": [
+      {
+        "name": "oxicam NSAIDs",
+        "children": [
+          {
+            "name": "Stevens-Johnson syndrome (SJS),toxic epidermal necrolysis (TEN)",
+            "children": [
+              {
+                "name": "HLA-B",
+                "children": [
+                  {
+                    "name": "HLA-B*73:01",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "breast cancer",
+    "children": [
+      {
+        "name": "lapatinib",
+        "children": [
+          {
+            "name": "drug induced liver injury (DILI)",
+            "children": [
+              {
+                "name": "HLA-DRB1",
+                "children": [
+                  {
+                    "name": "HLA-DRB1*07:01",
+                    "value": 445
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DQA1",
+                "children": [
+                  {
+                    "name": "HLA-DQA1*02:01",
+                    "value": 620
+                  }
+                ]
+              },
+              {
+                "name": "HLA-DQB1",
+                "children": [
+                  {
+                    "name": "HLA-DQB1*02:02",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

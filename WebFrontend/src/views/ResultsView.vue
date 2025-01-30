@@ -52,12 +52,12 @@ function formatADR()
       {
         text: [
           { text: "Drug: ", style: "titleBold" },
-          { text: `${item.drug} : ${item.link}` },
+          { text: `${item.drug} : ${item.pubmed}` },
         ],
       }
     )
-    returnList.push(
-      {
+
+    let textObject = {
         ul: [
           {
             text: `ADR: ${item.adr}`,
@@ -71,15 +71,20 @@ function formatADR()
             margin: [20, 0, 0, 0],
             style: "normalText",
           },
-          {
-            text: `Odds: ${item.odds}`,
+        ],
+      }
+
+      if (item.odds_exposed)
+      {
+        textObject.ul.push({
+            text: `Odds: ${item.odds_exposed}`,
             listType: "circle",
             margin: [20, 0, 0, 0],
             style: "normalText",
-          },
-        ],
-      },
-    )
+          })
+      }    
+
+    returnList.push(textObject)
   }
   return returnList
 }
@@ -187,11 +192,7 @@ async function pdfRender() {
             text: [{ text: "HLA Genotype: ", style: "titleBold" }],
           },
           {
-            ul: [
-                  `HLA-A: ${sharedData.genotypeList[0]}, ${sharedData.genotypeList[1]}`,
-                  `HLA-B: ${sharedData.genotypeList[2]}, ${sharedData.genotypeList[3]}`,
-                  `HLA-C: ${sharedData.genotypeList[4]}, ${sharedData.genotypeList[5]}`,
-            ],
+            ul: sharedData.genotypeList,
             style: "normalText",
             margin: [20, 0, 0, 0],
           },

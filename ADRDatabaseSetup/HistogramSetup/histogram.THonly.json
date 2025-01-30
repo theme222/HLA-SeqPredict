@@ -1,0 +1,1338 @@
+[
+  {
+    "name": "HLA-A*01:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0248464
+    ]
+  },
+  {
+    "name": "HLA-A*02:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0411435
+    ]
+  },
+  {
+    "name": "HLA-A*02:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0931071
+    ]
+  },
+  {
+    "name": "HLA-A*02:05",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00106866
+    ]
+  },
+  {
+    "name": "HLA-A*02:06",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0219076
+    ]
+  },
+  {
+    "name": "HLA-A*02:07",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0956452
+    ]
+  },
+  {
+    "name": "HLA-A*02:10",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133583
+    ]
+  },
+  {
+    "name": "HLA-A*02:11",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0030724
+    ]
+  },
+  {
+    "name": "HLA-A*02:20",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000534331
+    ]
+  },
+  {
+    "name": "HLA-A*03:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00748063
+    ]
+  },
+  {
+    "name": "HLA-A*03:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00120224
+    ]
+  },
+  {
+    "name": "HLA-A*11:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.22522
+    ]
+  },
+  {
+    "name": "HLA-A*11:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0241785
+    ]
+  },
+  {
+    "name": "HLA-A*11:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00414106
+    ]
+  },
+  {
+    "name": "HLA-A*23:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000400748
+    ]
+  },
+  {
+    "name": "HLA-A*24:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.108469
+    ]
+  },
+  {
+    "name": "HLA-A*24:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00454181
+    ]
+  },
+  {
+    "name": "HLA-A*24:04",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133583
+    ]
+  },
+  {
+    "name": "HLA-A*24:08",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133583
+    ]
+  },
+  {
+    "name": "HLA-A*24:20",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000400748
+    ]
+  },
+  {
+    "name": "HLA-A*25:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133583
+    ]
+  },
+  {
+    "name": "HLA-A*26:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0149613
+    ]
+  },
+  {
+    "name": "HLA-A*26:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133583
+    ]
+  },
+  {
+    "name": "HLA-A*29:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00574406
+    ]
+  },
+  {
+    "name": "HLA-A*30:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0196367
+    ]
+  },
+  {
+    "name": "HLA-A*30:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133583
+    ]
+  },
+  {
+    "name": "HLA-A*31:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00895004
+    ]
+  },
+  {
+    "name": "HLA-A*32:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0030724
+    ]
+  },
+  {
+    "name": "HLA-A*33:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000400748
+    ]
+  },
+  {
+    "name": "HLA-A*33:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.124766
+    ]
+  },
+  {
+    "name": "HLA-A*68:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0109538
+    ]
+  },
+  {
+    "name": "HLA-A*68:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000801496
+    ]
+  },
+  {
+    "name": "HLA-A*74:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00881646
+    ]
+  },
+  {
+    "name": "HLA-B*07:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00721539
+    ]
+  },
+  {
+    "name": "HLA-B*07:05",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.024853
+    ]
+  },
+  {
+    "name": "HLA-B*08:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00494388
+    ]
+  },
+  {
+    "name": "HLA-B*13:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0625334
+    ]
+  },
+  {
+    "name": "HLA-B*13:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0197755
+    ]
+  },
+  {
+    "name": "HLA-B*14:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00080171
+    ]
+  },
+  {
+    "name": "HLA-B*15:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0120257
+    ]
+  },
+  {
+    "name": "HLA-B*15:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.082977
+    ]
+  },
+  {
+    "name": "HLA-B*15:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133618
+    ]
+  },
+  {
+    "name": "HLA-B*15:07",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00253875
+    ]
+  },
+  {
+    "name": "HLA-B*15:10",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133618
+    ]
+  },
+  {
+    "name": "HLA-B*15:11",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0029396
+    ]
+  },
+  {
+    "name": "HLA-B*15:12",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00494388
+    ]
+  },
+  {
+    "name": "HLA-B*15:17",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00347408
+    ]
+  },
+  {
+    "name": "HLA-B*15:18",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00227151
+    ]
+  },
+  {
+    "name": "HLA-B*15:25",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0213789
+    ]
+  },
+  {
+    "name": "HLA-B*15:27",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00334046
+    ]
+  },
+  {
+    "name": "HLA-B*18:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0355425
+    ]
+  },
+  {
+    "name": "HLA-B*27:04",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0152325
+    ]
+  },
+  {
+    "name": "HLA-B*27:05",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00320684
+    ]
+  },
+  {
+    "name": "HLA-B*27:07",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00080171
+    ]
+  },
+  {
+    "name": "HLA-B*35:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00988776
+    ]
+  },
+  {
+    "name": "HLA-B*35:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000668092
+    ]
+  },
+  {
+    "name": "HLA-B*35:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0114912
+    ]
+  },
+  {
+    "name": "HLA-B*35:05",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.023116
+    ]
+  },
+  {
+    "name": "HLA-B*35:08",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000668092
+    ]
+  },
+  {
+    "name": "HLA-B*37:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00748263
+    ]
+  },
+  {
+    "name": "HLA-B*38:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0362106
+    ]
+  },
+  {
+    "name": "HLA-B*39:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00748263
+    ]
+  },
+  {
+    "name": "HLA-B*39:05",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00080171
+    ]
+  },
+  {
+    "name": "HLA-B*40:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0745591
+    ]
+  },
+  {
+    "name": "HLA-B*40:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0124265
+    ]
+  },
+  {
+    "name": "HLA-B*40:06",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0148316
+    ]
+  },
+  {
+    "name": "HLA-B*41:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000668092
+    ]
+  },
+  {
+    "name": "HLA-B*44:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00133618
+    ]
+  },
+  {
+    "name": "HLA-B*44:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0452966
+    ]
+  },
+  {
+    "name": "HLA-B*46:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.12961
+    ]
+  },
+  {
+    "name": "HLA-B*48:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00440941
+    ]
+  },
+  {
+    "name": "HLA-B*48:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000668092
+    ]
+  },
+  {
+    "name": "HLA-B*49:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000534474
+    ]
+  },
+  {
+    "name": "HLA-B*50:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00173704
+    ]
+  },
+  {
+    "name": "HLA-B*51:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0407536
+    ]
+  },
+  {
+    "name": "HLA-B*51:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00908605
+    ]
+  },
+  {
+    "name": "HLA-B*52:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0272582
+    ]
+  },
+  {
+    "name": "HLA-B*53:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000668092
+    ]
+  },
+  {
+    "name": "HLA-B*54:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00908605
+    ]
+  },
+  {
+    "name": "HLA-B*55:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00213789
+    ]
+  },
+  {
+    "name": "HLA-B*55:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.014698
+    ]
+  },
+  {
+    "name": "HLA-B*56:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.011892
+    ]
+  },
+  {
+    "name": "HLA-B*57:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0149653
+    ]
+  },
+  {
+    "name": "HLA-B*57:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000267237
+    ]
+  },
+  {
+    "name": "HLA-B*58:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0730893
+    ]
+  },
+  {
+    "name": "HLA-B*67:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000668092
+    ]
+  },
+  {
+    "name": "HLA-B*73:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000267237
+    ]
+  },
+  {
+    "name": "HLA-B*81:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000534474
+    ]
+  },
+  {
+    "name": "HLA-C*01:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.15954
+    ]
+  },
+  {
+    "name": "HLA-C*01:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000668092
+    ]
+  },
+  {
+    "name": "HLA-C*02:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00267237
+    ]
+  },
+  {
+    "name": "HLA-C*03:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0736237
+    ]
+  },
+  {
+    "name": "HLA-C*03:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0243185
+    ]
+  },
+  {
+    "name": "HLA-C*03:04",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0871192
+    ]
+  },
+  {
+    "name": "HLA-C*04:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0523784
+    ]
+  },
+  {
+    "name": "HLA-C*04:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.038883
+    ]
+  },
+  {
+    "name": "HLA-C*05:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0014698
+    ]
+  },
+  {
+    "name": "HLA-C*06:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0440941
+    ]
+  },
+  {
+    "name": "HLA-C*07:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0617317
+    ]
+  },
+  {
+    "name": "HLA-C*07:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.163816
+    ]
+  },
+  {
+    "name": "HLA-C*07:04",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0442277
+    ]
+  },
+  {
+    "name": "HLA-C*08:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.101149
+    ]
+  },
+  {
+    "name": "HLA-C*08:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00080171
+    ]
+  },
+  {
+    "name": "HLA-C*08:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00106895
+    ]
+  },
+  {
+    "name": "HLA-C*12:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0342063
+    ]
+  },
+  {
+    "name": "HLA-C*12:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0144308
+    ]
+  },
+  {
+    "name": "HLA-C*14:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0374131
+    ]
+  },
+  {
+    "name": "HLA-C*14:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000267237
+    ]
+  },
+  {
+    "name": "HLA-C*15:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0292624
+    ]
+  },
+  {
+    "name": "HLA-C*15:05",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00561197
+    ]
+  },
+  {
+    "name": "HLA-C*16:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0036077
+    ]
+  },
+  {
+    "name": "HLA-C*16:04",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133618
+    ]
+  },
+  {
+    "name": "HLA-C*17:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000267237
+    ]
+  },
+  {
+    "name": "HLA-C*18:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000267237
+    ]
+  },
+  {
+    "name": "HLA-DQB1*02:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.125735
+    ]
+  },
+  {
+    "name": "HLA-DQB1*03:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.196152
+    ]
+  },
+  {
+    "name": "HLA-DQB1*03:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0487707
+    ]
+  },
+  {
+    "name": "HLA-DQB1*03:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.122394
+    ]
+  },
+  {
+    "name": "HLA-DQB1*04:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0348744
+    ]
+  },
+  {
+    "name": "HLA-DQB1*04:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0109567
+    ]
+  },
+  {
+    "name": "HLA-DQB1*05:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.116515
+    ]
+  },
+  {
+    "name": "HLA-DQB1*05:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.177044
+    ]
+  },
+  {
+    "name": "HLA-DQB1*05:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0456975
+    ]
+  },
+  {
+    "name": "HLA-DQB1*06:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0795029
+    ]
+  },
+  {
+    "name": "HLA-DQB1*06:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0140299
+    ]
+  },
+  {
+    "name": "HLA-DQB1*06:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0080171
+    ]
+  },
+  {
+    "name": "HLA-DQB1*06:04",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00414217
+    ]
+  },
+  {
+    "name": "HLA-DQB1*06:09",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0117584
+    ]
+  },
+  {
+    "name": "HLA-DQB1*06:10",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0014698
+    ]
+  },
+  {
+    "name": "HLA-DRB1*01:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00414217
+    ]
+  },
+  {
+    "name": "HLA-DRB1*01:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000400855
+    ]
+  },
+  {
+    "name": "HLA-DRB1*03:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.059861
+    ]
+  },
+  {
+    "name": "HLA-DRB1*04:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00173704
+    ]
+  },
+  {
+    "name": "HLA-DRB1*04:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000400855
+    ]
+  },
+  {
+    "name": "HLA-DRB1*04:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0145644
+    ]
+  },
+  {
+    "name": "HLA-DRB1*04:04",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00387493
+    ]
+  },
+  {
+    "name": "HLA-DRB1*04:05",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0399519
+    ]
+  },
+  {
+    "name": "HLA-DRB1*04:06",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.014698
+    ]
+  },
+  {
+    "name": "HLA-DRB1*04:07",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000267237
+    ]
+  },
+  {
+    "name": "HLA-DRB1*04:08",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000534474
+    ]
+  },
+  {
+    "name": "HLA-DRB1*04:10",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00106895
+    ]
+  },
+  {
+    "name": "HLA-DRB1*04:11",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133618
+    ]
+  },
+  {
+    "name": "HLA-DRB1*07:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0594602
+    ]
+  },
+  {
+    "name": "HLA-DRB1*08:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00187066
+    ]
+  },
+  {
+    "name": "HLA-DRB1*08:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0183057
+    ]
+  },
+  {
+    "name": "HLA-DRB1*08:12",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000534474
+    ]
+  },
+  {
+    "name": "HLA-DRB1*09:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0970069
+    ]
+  },
+  {
+    "name": "HLA-DRB1*10:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0212453
+    ]
+  },
+  {
+    "name": "HLA-DRB1*11:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0239177
+    ]
+  },
+  {
+    "name": "HLA-DRB1*11:04",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00080171
+    ]
+  },
+  {
+    "name": "HLA-DRB1*12:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0100214
+    ]
+  },
+  {
+    "name": "HLA-DRB1*12:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.160877
+    ]
+  },
+  {
+    "name": "HLA-DRB1*13:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00694816
+    ]
+  },
+  {
+    "name": "HLA-DRB1*13:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.015767
+    ]
+  },
+  {
+    "name": "HLA-DRB1*13:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133618
+    ]
+  },
+  {
+    "name": "HLA-DRB1*13:12",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0114912
+    ]
+  },
+  {
+    "name": "HLA-DRB1*14:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0427579
+    ]
+  },
+  {
+    "name": "HLA-DRB1*14:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133618
+    ]
+  },
+  {
+    "name": "HLA-DRB1*14:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000668092
+    ]
+  },
+  {
+    "name": "HLA-DRB1*14:04",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0281935
+    ]
+  },
+  {
+    "name": "HLA-DRB1*14:05",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.00681454
+    ]
+  },
+  {
+    "name": "HLA-DRB1*14:07",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000267237
+    ]
+  },
+  {
+    "name": "HLA-DRB1*15:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0800374
+    ]
+  },
+  {
+    "name": "HLA-DRB1*15:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.122528
+    ]
+  },
+  {
+    "name": "HLA-DRB1*15:03",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000668092
+    ]
+  },
+  {
+    "name": "HLA-DRB1*16:01",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.000133618
+    ]
+  },
+  {
+    "name": "HLA-DRB1*16:02",
+    "type": "bar",
+    "stack": "bar",
+    "data": [
+      0.0499733
+    ]
+  }
+]

@@ -20,3 +20,7 @@ singularity exec -B /app:/tmp /app/singularity/hla-la_1_0_3 /usr/local/opt/hla-l
 singularity exec -B /app:/tmp /app/singularity/hla-la_1_0_3 /usr/local/opt/hla-la/bin/HLA-LA --action prepareGraph --PRG_graph_dir /tmp/references/PRG_MHC_GRCh38_withIMGT
 
  singularity exec -B /app:/tmp /app/singularity/hla-la_1_0_3 /usr/local/opt/hla-la/src/HLA-LA.pl --BAM /tmp/uploads/16/e1.bam --graph /tmp/references/PRG_MHC_GRCh38_withIMGT --sampleID NA12878 --maxThreads 7 --workingDir /tmp
+
+
+
+/usr/local/bin/HLA-LA --action HLA --maxThreads 32 --sampleID out --outputDirectory /tmp/uploads/2/Singleton/hla_la/out --PRG_graph_dir /tmp/references/graphs/PRG_MHC_GRCh38_withIMGT --FASTQU /tmp/uploads/2/Singleton/hla_la/out/R_U.fastq.splitLongReads --FASTQ1 /tmp/uploads/2/Singleton/hla_la/out/R_1.fastq --FASTQ2 /tmp/uploads/2/Singleton/hla_la/out/R_2.fastq --bwa_bin /usr/local/bin/bwa --samtools_bin /usr/bin/samtools --mapAgainstCompleteGenome 1 --longReads ont2d
