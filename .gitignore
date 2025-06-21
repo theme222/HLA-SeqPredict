@@ -13,3 +13,4 @@
 /WebFrontend/Dockerfile
 /WebFrontend/.git
 /WebFrontend/.env
+/.idea/
