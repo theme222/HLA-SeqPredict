@@ -11,7 +11,7 @@ function ValidName(name)
   return name.length > 0;
 }
 
-async function ValidEmail(email)
+function ValidEmail(email)
 {
   const patt = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -23,11 +23,22 @@ function ValidPassword(password)
   return password.length >= 6;
 }
 
-function ValidLabel(label)
-{
-  const patt = /^[a-zA-Z0-9_]+$/;
-  return patt.test(label);
+function ValidLabel(label) {
+  const patt = /^[^\x00-\x1F\x7F]+$/;
+  return patt.test(label) && label.length <= 100;
 }
+
+function ErrorHandler(err)
+{
+  window.sharedData.latestError = err;
+  console.error(err);
+}
+
+function SilentErrorHandler(err)
+{
+  console.log("A silent error has occured", err);
+}
+
 
 export{
     ScrollTo,
@@ -35,4 +46,6 @@ export{
     ValidEmail,
     ValidLabel,
     ValidPassword,
+    ErrorHandler,
+    SilentErrorHandler,
 }

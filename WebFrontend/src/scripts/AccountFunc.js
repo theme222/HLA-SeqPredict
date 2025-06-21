@@ -31,7 +31,7 @@ async function getSequences() {
         console.error('Error getting info :', error);
         alert("Backend server unavailable")
     });
-    return response.data['list']
+    return response.data['list']  // Array : [id, label, upload_time, status, igv, hla_la]
 }
 
 function Logout()

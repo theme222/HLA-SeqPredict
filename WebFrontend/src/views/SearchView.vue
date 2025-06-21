@@ -197,7 +197,7 @@ function HistogramChart2() {
       tooltip: {
         trigger: "axis",
         axisPointer: {
-          type: "shadow",
+          type: "shadow-sm",
         },
       },
       legend: {},
@@ -280,7 +280,7 @@ function HistogramChart() {
     tooltip: {
       trigger: "axis",
       axisPointer: {
-        type: "shadow",
+        type: "shadow-sm",
       },
     },
     dataset: {
@@ -377,11 +377,11 @@ function WELOVEVUEJSBABY(link) {
             </summary>
             <ul
               multiple
-              class="menu dropdown-content bg-white rounded-box z-[1] p-2 shadow w-200 h-36"
+              class="menu dropdown-content bg-white rounded-box z-1 p-2 shadow-sm w-200 h-32"
             >
               <li>
-                <label class="label cursor-pointer">
-                  <span class="label-text"> All </span>
+                <label class="cursor-pointer justify-between flex items-center">
+                  <span> All </span>
                   <input
                     type="checkbox"
                     checked="checked"
@@ -391,8 +391,8 @@ function WELOVEVUEJSBABY(link) {
                 </label>
               </li>
               <li v-for="(i, index) in regionDropdown" :key="i">
-                <label class="label cursor-pointer">
-                  <span class="label-text">{{ i }}</span>
+                <label class="cursor-pointer flex justify-between items-center">
+                  <span class="">{{ i }}</span>
                   <input
                     type="checkbox"
                     v-model="selectedRegions[index + 1]"
@@ -449,10 +449,10 @@ function WELOVEVUEJSBABY(link) {
                 </summary>
                 <ul
                   multiple
-                  class="w-full menu dropdown-content dropdown-bottom bg-white overflow-y-scroll rounded-box z-[1] p-2 shadow"
+                  class="w-full menu dropdown-content dropdown-bottom bg-white overflow-y-scroll rounded-box z-1 p-2 shadow-sm"
                 >
                   <li>
-                    <label class="label cursor-pointer">
+                    <label class="flex justify-between items-center cursor-pointer">
                       <span class="label-text"> All </span>
                       <input
                         type="checkbox"
@@ -463,7 +463,7 @@ function WELOVEVUEJSBABY(link) {
                     </label>
                   </li>
                   <li v-for="(i, index) in sunburstCountryDropdown" :key="i">
-                    <label class="label cursor-pointer">
+                    <label class="flex justify-between items-center cursor-pointer">
                       <span class="label-text">{{ i }}</span>
                       <input
                         type="checkbox"
@@ -477,7 +477,7 @@ function WELOVEVUEJSBABY(link) {
               </details>
             </div>
             <label
-              class="label cursor-pointer w-64 h-16 border-2 border-accent"
+              class="flex justify-around items-center cursor-pointer w-64 h-16 border-2 border-accent"
             >
               <span class="label-text pl-2">MinP</span>
               <input
@@ -492,23 +492,23 @@ function WELOVEVUEJSBABY(link) {
         <div class="w-full h-8 flex justify-center items-center">
           <div class="w-220 h-full justify-center flex items-center gap-10">
             <div class="flex justify-center items-center gap-1">
-              <div class="w-5 h-3 bg-[#DB6F57] rounded-sm"></div>
+              <div class="w-5 h-3 bg-[#DB6F57] rounded-xs"></div>
               <div class="text-sm font-semibold">Disease</div>
             </div>
             <div class="flex justify-center items-center gap-1">
-              <div class="w-5 h-3 bg-[#ECE0C5] rounded-sm"></div>
+              <div class="w-5 h-3 bg-[#ECE0C5] rounded-xs"></div>
               <div class="text-sm font-semibold">Drug</div>
             </div>
             <div class="flex justify-center items-center gap-1">
-              <div class="w-5 h-3 bg-[#CF648C] rounded-sm"></div>
+              <div class="w-5 h-3 bg-[#CF648C] rounded-xs"></div>
               <div class="text-sm font-semibold">ADR</div>
             </div>
             <div class="flex justify-center items-center gap-1">
-              <div class="w-5 h-3 bg-[#5DA597] rounded-sm"></div>
+              <div class="w-5 h-3 bg-[#5DA597] rounded-xs"></div>
               <div class="text-sm font-semibold">Gene Loci</div>
             </div>
             <div class="flex justify-center items-center gap-1">
-              <div class="w-5 h-3 bg-[#55547F] rounded-sm"></div>
+              <div class="w-5 h-3 bg-[#55547F] rounded-xs"></div>
               <div class="text-sm font-semibold">Allele</div>
             </div>
           </div>

@@ -1,5 +1,112 @@
-@tailwind base;
+@import 'tailwindcss';
+@plugin "daisyui"
+{
+  themes: mytheme --default;
+  exclude: rootscrollgutter;
+}
 
-@tailwind components;
+@plugin "daisyui/theme" {
+  name: "mytheme";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(98% 0 0);
+  --color-base-300: oklch(95% 0 0);
+  --color-base-content: oklch(12% 0.042 264.695);
+  --color-primary: oklch(62% 0.224 267.815);
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: oklch(55% 0.046 257.417);
+  --color-secondary-content: oklch(100% 0 0);
+  --color-accent: oklch(84% 0.17 164.978);
+  --color-accent-content: oklch(26% 0.065 152.934);
+  --color-neutral: oklch(27% 0.041 260.031);
+  --color-neutral-content: oklch(100% 0 0);
+  --color-info: oklch(68% 0.169 237.323);
+  --color-info-content: oklch(100% 0 0);
+  --color-success: oklch(72% 0.219 149.579);
+  --color-success-content: oklch(100% 0 0);
+  --color-warning: oklch(85% 0.199 91.936);
+  --color-warning-content: oklch(0% 0 0);
+  --color-error: oklch(63% 0.237 25.331);
+  --color-error-content: oklch(0% 0 0);
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.25rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.3125rem;
+  --border: 1.5px;
+  --depth: 0;
+  --noise: 0;
+}
 
-@tailwind utilities;
+@theme {
+  --spacing-1\/50: 2%;
+  --spacing-2\/50: 4%;
+  --spacing-3\/50: 6%;
+  --spacing-4\/50: 8%;
+  --spacing-5\/50: 10%;
+  --spacing-6\/50: 12%;
+  --spacing-7\/50: 14%;
+  --spacing-8\/50: 16%;
+  --spacing-9\/50: 18%;
+  --spacing-10\/50: 20%;
+  --spacing-11\/50: 22%;
+  --spacing-12\/50: 24%;
+  --spacing-13\/50: 26%;
+  --spacing-14\/50: 28%;
+  --spacing-15\/50: 30%;
+  --spacing-16\/50: 32%;
+  --spacing-17\/50: 34%;
+  --spacing-18\/50: 36%;
+  --spacing-19\/50: 38%;
+  --spacing-20\/50: 40%;
+  --spacing-21\/50: 42%;
+  --spacing-22\/50: 44%;
+  --spacing-23\/50: 46%;
+  --spacing-24\/50: 48%;
+  --spacing-25\/50: 50%;
+  --spacing-26\/50: 52%;
+  --spacing-27\/50: 54%;
+  --spacing-28\/50: 56%;
+  --spacing-29\/50: 58%;
+  --spacing-30\/50: 60%;
+  --spacing-31\/50: 62%;
+  --spacing-32\/50: 64%;
+  --spacing-33\/50: 66%;
+  --spacing-34\/50: 68%;
+  --spacing-35\/50: 70%;
+  --spacing-36\/50: 72%;
+  --spacing-37\/50: 74%;
+  --spacing-38\/50: 76%;
+  --spacing-39\/50: 78%;
+  --spacing-40\/50: 80%;
+  --spacing-41\/50: 82%;
+  --spacing-42\/50: 84%;
+  --spacing-43\/50: 86%;
+  --spacing-44\/50: 88%;
+  --spacing-45\/50: 90%;
+  --spacing-46\/50: 92%;
+  --spacing-47\/50: 94%;
+  --spacing-48\/50: 96%;
+  --spacing-49\/50: 98%;
+  --spacing-50\/50: 100%;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}

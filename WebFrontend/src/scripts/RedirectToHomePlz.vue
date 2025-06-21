@@ -1,6 +1,7 @@
 <script setup>
 /* eslint-disable */
-window.location.href = 'home'
+import { useRouter, useRoute } from 'vue-router'
+useRouter().push("home");
 </script>
 
 <template>

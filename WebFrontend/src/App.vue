@@ -15,6 +15,8 @@ const searchBarText = ref('');
 const activeSuggestionList = ref([]);
 let suggestionList;
 
+const viewportSize = ref([0,0]);
+
 async function SearchBarSetup()
 {
   const histogramDataModule = await import("./data/histogram.json");
@@ -66,8 +68,6 @@ function GiveSuggestion()
   activeSuggestionList.value = output.sort((a,b) => a[0] - b[0]).slice(0,3);
 }
 
-
-
 function DoSearchQuery(_query) {
   if (suggestionList && suggestionList.includes(_query)) searchBarText.value = _query
   else if (_query != '')  searchBarText.value = activeSuggestionList.value[0][1];
@@ -85,23 +85,43 @@ getAccountInfo().then((data) => {
 
 function ClearError() {
   window.sharedData.latestError = null;
+  error.value = null;
 }
 
 setInterval(() => {
-  error.value = window.sharedData.latestError;
+  if (!window.sharedData.latestError) 
+  {
+    error.value = null;
+    return;
+  }
+  else
+  {
+    if (window.sharedData.latestError.response == null) 
+    {
+      error.value = window.sharedData.latestError.message;
+      return;
+    }
+    error.value = `${window.sharedData.latestError.response.data} : ${window.sharedData.latestError.response.status}`;
+  }
 }, 200);
+
+window.addEventListener("resize", () =>
+{
+  viewportSize.value = [window.innerWidth, window.innerHeight];
+})
+
+
+
 </script>
 
 <template>
 <!-- Navbar -->
-<div class="z-10 navbar bg-base-100 bg-primary fixed">
-    <div class="flex">
-      <RouterLink class="btn btn-ghost text-2xl text-white font-bold" to="home"
-        >HLA-SeqPredict</RouterLink
-      >
+<div class="z-69420 navbar flex justify-between bg-primary fixed">
+    <div class="flex sm:min-w-54 xl:min-w-88 justify-start items-center">
+      <RouterLink class="btn btn-ghost text-2xl text-white font-bold" to="home">HLA-SeqPredict</RouterLink>
     </div>
-    <div class="flex-1 justify-center items-center">
-      <div class="w-11/12 max-w-200 h-12 flex gap-1">
+    <div class="justify-center items-center w-4/5 max-w-200 hidden sm:flex">
+      <div class="w-full h-12 flex gap-1 px-5 items-center">
         <label class="group flex input w-full items-center justify-between px-5 dropdown hover:dropdown-open dropdown-bottom dropdown-end">
           <div class="w-full flex items-center">
             <input
@@ -123,41 +143,27 @@ setInterval(() => {
           </ul>
         </label>
         <div class="btn btn-neutral flex justify-center items-center w-14" @click="DoSearchQuery(searchBarText)">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            fill="white"
-            class="h-6 w-6 opacity-100"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-              clip-rule="evenodd"
-            />
-          </svg>
+          <img src="@/assets/search.svg" alt="search" class="w-6 h-6">
         </div>
       </div>
     </div>
-    <div class="flex-none">
-      <ul class="menu menu-horizontal px-1">
-        <li>
-          <RouterLink to="dashboard" class="font-bold text-white"
-            >Dashboard</RouterLink
-          >
+    <div class="flex min-w-35 lg:min-w-88 justify-end">
+      <ul class="menu menu-horizontal w-full px-1">
+        <li class="hidden lg:block">
+          <RouterLink to="dashboard" class="font-bold text-white">Dashboard</RouterLink>
         </li>
-        <li>
-          <RouterLink to="upload" class="font-bold text-white"
-            >Upload Files</RouterLink
-          >
+        <li class="hidden lg:block">
+          <RouterLink to="upload" class="font-bold text-white">Upload Files</RouterLink>
         </li>
         <li>
           <details>
             <summary class="text-white font-bold">
               {{ accountName || "Account" }}
             </summary>
-            <ul
-              class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-28 right-0 bg-ghost"
-            >
+            <ul class="p-2 shadow-sm menu dropdown-content bg-base-100 rounded-box w-28 right-0 bg-ghost">
+              <li class="lg:hidden"><RouterLink to="dashboard">Dashboard</RouterLink></li>
+              <li class="lg:hidden"><RouterLink to="upload">Upload</RouterLink></li>
+              <li class="sm:hidden"><RouterLink to="search">Search</RouterLink></li>
               <li><RouterLink to="profile">Profile</RouterLink></li>
               <li><RouterLink to="signup">Sign up</RouterLink></li>
               <li><RouterLink to="login">Login</RouterLink></li>
@@ -169,40 +175,9 @@ setInterval(() => {
 </div>
 <!-- Navbar -->
 
-<!-- Filter Menu 
-<dialog id="filterModal" class="modal">
-  <div class="modal-box w-5/6 max-w-256">
-    <h3 class="text-3xl font-bold">Filter</h3>
-    <div name="Just some padding for the filter thing" class="divider"></div>
-    <div
-      v-for="i in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
-      :key="i"
-      class="w-full grid grid-cols-1 gap-2 py-2"
-    >
-      <h4 class="text-xl font-bold">Parameter {{ i }}</h4>
-      <div
-        class="py-1 flex justify-normal items-center gap-3 overflow-scroll"
-      >
-        <input
-          v-for="v in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
-          :key="v"
-          :id="'checkbox' + v"
-          :aria-label="'checkbox' + v"
-          type="checkbox"
-          class="btn btn-primary btn-outline rounded-full"
-        />
-      </div>
-    </div>
-  </div>
-  <form method="dialog" class="modal-backdrop">
-    <button>close</button>
-  </form>
-</dialog>
-Filter Menu -->
-
 <!-- Background -->
 <div
-  class="fixed -z-20 hero min-h-screen bg-base-200 bg-gradient-to-br from-blue-50 to-purple-50"
+  class="fixed -z-20 hero min-h-screen bg-base-200 bg-linear-to-br from-blue-50 to-purple-50"
 ></div>
 <!-- Background -->
 
@@ -210,7 +185,7 @@ Filter Menu -->
 
 <!-- Error View -->
 <div
-  class="bottom-5 w-full flex justify-end items-center fixed z-50"
+  class="bottom-5 w-full flex justify-end items-center fixed z-69420"
   v-if="error"
 >
   <div class="px-5">
@@ -234,5 +209,16 @@ Filter Menu -->
   </div>
 </div>
 <!-- Error View -->
+
+<!-- Screen size debug -->
+<div class="p-4 text-center text-white bg-info rounded-lg text-lg font-bold fixed bottom-0 z-9001" hidden>
+    <span class="block sm:hidden">Extra Small (xs)</span>
+    <span class="hidden sm:block md:hidden">Small (sm)</span>
+    <span class="hidden md:block lg:hidden">Medium (md)</span>
+    <span class="hidden lg:block xl:hidden">Large (lg)</span>
+    <span class="hidden xl:block">Extra Large (xl)</span>
+    <span>{{ viewportSize[0] }}x{{ viewportSize[1] }}</span>
+</div>
+<!-- Screen size debug -->
 </template>
 

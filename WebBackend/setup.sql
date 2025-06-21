@@ -11,20 +11,22 @@ CREATE TABLE "Sessions" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     token TEXT NOT NULL,
-    start_time integer NOT NULL,
-    duration integer NOT NULL,
+    start_time INTEGER NOT NULL, -- Linux Timestamp
+    duration INTEGER NOT NULL, -- Time (seconds)
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
--- CODE : 0 - HAS NOT BEEN CALLED, 1 - WORKING, 2 - DONE
 CREATE TABLE "User_sequences" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     upload_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     user_id INTEGER NOT NULL,
     label TEXT NOT NULL,
-    igv INTEGER DEFAULT 0,
-    hla_la INTEGER DEFAULT 0,
-    hisat_genotype INTEGER DEFAULT 0,
-    optitype INTEGER DEFAULT 0,
+    is_paired INTEGER DEFAULT 0,  -- sqlite does not have a bool value so just using 0 and 1
+    status TEXT DEFAULT "IDLE",
+    igv TEXT DEFAULT "PENDING",
+    hla_la TEXT DEFAULT "PENDING",
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );
+
+-- Current tool status list : PENDING, RUNNING, ERROR, COMPLETED
+-- Current sequence status list : IDLE, RUNNING {tool}

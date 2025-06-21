@@ -1,7 +1,6 @@
 import json
 from TechnicalToolsV2 import log
-from flask import jsonify
-from marshmallow import Schema, fields, post_load, EXCLUDE
+from marshmallow import Schema, fields, post_load, EXCLUDE, ValidationError
 from time import time, sleep
 import secrets
 import pandas as pd
@@ -9,6 +8,8 @@ import os
 import sqlite3
 import threading
 import pysam
+import subprocess
+import sys
 
 CURRENT_FILE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 HLA_ADR_PATH = 'databases/hla_adr.json'
@@ -17,13 +18,14 @@ DATABASE_TIMEOUT = 0.5  # seconds
 
 
 class User:
-    def __init__(self, user_id, name, email, password, cookie):
+    def __init__(self, user_id: int, name: str, email: str, password: str, cookie: str, sequence_id: int):
         # Use "UserSchema().load(data)" to load this user | data : dict(str: any)
         self.user_id = user_id
         self.name = name
         self.email = email
         self.password = password
         self.cookie = cookie
+        self.sequence_id = sequence_id
 
     def add_user_to_db(self):
         log("Signing up user : ", logtitle="CLASS METHOD", var=self.name, color='black')
@@ -69,13 +71,25 @@ class User:
             log("Invalid email or password", logtitle='error', color='red')
             return False
 
-    def fetch_with_cookie(self, get_password=False, change_values=True):
+    def fetch_with_cookie(self, get_password=False, change_values=True) -> bool:
         log("Fetching cookie : ", logtitle="CLASS METHOD", var=self.cookie, color='black')
+
         connection, cursor = connect()
+
+        cursor.execute("SELECT user_id, start_time, duration From Sessions WHERE token = ?", (self.cookie,))
+        session_info = cursor.fetchone()
+
+        if not session_info: return False
+        user_id, start_time, duration = session_info
+        if int(time()) > start_time + duration:
+            cursor.execute("DELETE FROM Sessions WHERE token = ?", (self.cookie,))
+            return False
+
         cursor.execute(
-            "SELECT id,name,email,password_hash FROM Users WHERE id = (SELECT user_id FROM Sessions WHERE token = ?)",
-            (self.cookie,))
+            "SELECT id,name,email,password_hash FROM Users WHERE id = ?",
+            (user_id,))
         info = cursor.fetchone()
+
         disconnect(connection, cursor)
 
         if info:
@@ -83,7 +97,7 @@ class User:
             if not get_password: self.password = None  # Probably a vulnerability here but I don't really care
             return True
         else:
-            log("Invalid cookie", logtitle='error', color='red')
+            log("User doesn't exist", logtitle='error', color='red')
             return False
 
     def change_user_info(self):
@@ -118,6 +132,42 @@ class User:
 
         return True
 
+    def validate_sequence_ownership(self) -> bool:
+        """
+        :return bool:
+        Pass through the sequence id, and it will check if the user owns the sequence
+        """
+        connection, cursor = connect()
+        cursor.execute(f"SELECT user_id FROM User_sequences WHERE id=?", (self.sequence_id,))
+        sequence_owner_id = cursor.fetchone()
+        disconnect(connection, cursor)
+        return sequence_owner_id is None or self.user_id == sequence_owner_id[0]
+
+    @staticmethod
+    def preliminary_check(data, properties_to_check: list[str] = None):
+        """
+        :param data:
+        :param properties_to_check: A list of user properties that are expected to exist and be validated. example: [user_id, name, email, cookie]
+        :return:
+        Does common checks while loading user data and returns a user object and an error code if it failed a check
+        """
+        if properties_to_check is None:
+            properties_to_check = []
+
+        try:
+            user: User = UserSchema().load(data)
+        except ValidationError:
+            return UserSchema().load({}), "Provided values are in an incorrect format"
+
+        if "cookie" in properties_to_check and user.cookie is None:
+            return user, "No session cookie provided"
+        if "cookie" in properties_to_check and not user.fetch_with_cookie():
+            return user, "Invalid cookie"
+        if "sequence_id" in properties_to_check and not user.validate_sequence_ownership():
+            return user, "Sequence doesn't belong to user"
+
+        return user, ""
+
     @property
     def path(self):
         return f"{CURRENT_FILE_DIRECTORY}/uploads/{self.user_id}"
@@ -127,11 +177,12 @@ class User:
 
 
 class UserSchema(Schema):
-    user_id = fields.Int(missing=None)
-    name = fields.Str(missing=None)
-    email = fields.Email(missing=None)
-    password = fields.Str(missing=None)
-    cookie = fields.Str(missing=None)
+    user_id = fields.Int(load_default=None)
+    name = fields.Str(load_default=None)
+    email = fields.Email(load_default=None)
+    password = fields.Str(load_default=None)
+    cookie = fields.Str(load_default=None)
+    sequence_id = fields.Int(load_default=None)
 
     class Meta:
         unknown = EXCLUDE
@@ -140,8 +191,7 @@ class UserSchema(Schema):
     def make_user(self, data, **kwargs):
         return User(**data)
 
-    def dump(self, obj,
-             include=None):  # Untested chatgpt code example : schema.dump(userObject, include=['user_id','password']
+    def dump(self, obj, include=None):  # Untested chatgpt code example : schema.dump(userObject, include=['user_id','password']
         if include:
             data = {key: getattr(obj, key) for key in include if hasattr(obj, key)}
             return super().dump(data)
@@ -161,10 +211,11 @@ def check_value_in_column_exists(value, column_name):
 
 
 def connect(database_name="users.db"):
+    # TODO: Consider the pros and cons of adding a context manager to this section instead of the connect disconnect bullshit
     log(f"Connecting to database {database_name}", logtitle="database", color='black')
     connection = sqlite3.connect("databases/" + database_name)
     cursor = connection.cursor()
-    threading.Thread(target=disconnect, args=(connection, cursor, True)).start()
+    threading.Thread(target=disconnect, args=(connection, cursor, True)).start()  # This is the internal Call
     return connection, cursor
 
 
@@ -188,72 +239,148 @@ def disconnect(connection, cursor, _internalCall=False):
     connection.close()
 
 
-def set_status_code(value_to_set, column_name, label, user_id):
+def set_column(value_to_set, column_name, sequence_id, table="User_sequences"):
     connection, cursor = connect()
-    cursor.execute(f"UPDATE User_sequences SET {column_name} = ? WHERE label = ? AND user_id = ?",
-                   (value_to_set, label, user_id))
+    cursor.execute(f"UPDATE {table} SET {column_name} = ? WHERE id = ?",
+                   (value_to_set, sequence_id))
     disconnect(connection, cursor)
 
 
-def get_status_code(label, column_name, user_id):
+def get_column(sequence_id, column_name, table="User_sequences"):
     connection, cursor = connect()
-    cursor.execute(f"SELECT {column_name} FROM User_sequences WHERE label = ? AND user_id = ?", (label, user_id))
-    _a = cursor.fetchone()[0]
+    cursor.execute(f"SELECT {column_name} FROM {table} WHERE id = ?", (sequence_id,))
+    value = cursor.fetchone()[0]
     disconnect(connection, cursor)
-    return _a
+    return value
 
 
-def run(command):
+def run(command, log_directory=None):
+    """
+    :param command:
+    :param log_directory:
+    :return:
+
+    The values being written into the file is as follows
+    > command being executed
+    ! error
+    logsandmessages
+    """
     log("Running command :", var=command, logtitle='run', color='cyan')
-    os.system(command)
+
+    if log_directory is None:
+        os.system(command)
+        return
+
+    file_path = os.path.join(log_directory, "logs")
+
+    file = open(file_path, 'a')
+    try:
+        file.write(f"> {command}\n")
+        # Process has stdout and stderr which will buffer for each new line thus giving "real time" updates hopefully
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                                   bufsize=1)
+
+        for line in process.stdout:
+            sys.stdout.write(line)
+            sys.stdout.flush()
+            file.write(line)
+            file.flush()
+
+        for line in process.stderr:
+            sys.stderr.write(line)
+            sys.stderr.flush()
+            file.write(line)
+            file.flush()
+
+        process.wait()
+
+    except Exception as e:
+        if file: file.write("! " + str(e))
+        raise e
+
+    finally:
+        if file: file.close()
 
 
-def transform_file_for_igv(directory, filename, user_id):
-    set_status_code(1, "igv", filename, user_id)
+def transform_file_for_igv(directory, sequence_id):
+    # directory : uploads/user_id/sequence_id
+
+    set_column("RUNNING", "igv", sequence_id)
+    set_column("RUNNING IGV", "status", sequence_id)
     os.makedirs(f"/app/{directory}/igv")
 
-    # TODO: Make the checking for if it is paired end related to the database
-    if os.path.exists(f"{directory}/zip"):
-        run(f"cp /app/{directory}/{filename}.R1.fq /app/{directory}/igv/{filename}.R1.fq")
-        run(f"cp /app/{directory}/{filename}.R2.fq /app/{directory}/igv/{filename}.R2.fq")
-        directory += "/igv"
-        run(f"singularity exec -B /app:/tmp /app/singularity/bwa_0_7_18 bwa mem /tmp/references/chr6.fa '/tmp/{directory}/{filename}.R1.fq' '/tmp/{directory}/{filename}.R2.fq' > '/app/{directory}/{filename}.sam'")
-    else:
-        run(f"cp /app/{directory}/{filename}.fq /app/{directory}/igv/{filename}.fq")
-        directory += "/igv"
-        run(f"singularity exec -B /app:/tmp /app/singularity/bwa_0_7_18 bwa mem /tmp/references/chr6.fa '/tmp/{directory}/{filename}.fq' > '/app/{directory}/{filename}.sam'")
+    sequence_directory = f"/app/{directory}"
+    is_paired = get_column(sequence_id, "is_paired") == 1  # sqlite does not have a bool value
 
-    run(f"singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools sort '/tmp/{directory}/{filename}.sam' > '/app/{directory}/{filename}.bam'")
-    run(f"singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools index '/tmp/{directory}/{filename}.bam'")
-    set_status_code(2, "igv", filename, user_id)
-
-
-def run_hla_la(directory, filename, user_id):
     try:
-        set_status_code(1, "hla_la", filename, user_id)
+        if is_paired:
+            run(f"cp /app/{directory}/{sequence_id}.R1.fq /app/{directory}/igv/{sequence_id}.R1.fq", sequence_directory)
+            run(f"cp /app/{directory}/{sequence_id}.R2.fq /app/{directory}/igv/{sequence_id}.R2.fq", sequence_directory)
+            directory += "/igv"
+            run(f"singularity exec -B /app:/tmp /app/singularity/bwa_0_7_18 bwa mem /tmp/references/chr6.fa '/tmp/{directory}/{sequence_id}.R1.fq' '/tmp/{directory}/{sequence_id}.R2.fq' > '/app/{directory}/{sequence_id}.sam'",
+                sequence_directory)
+        else:
+            run(f"cp /app/{directory}/{sequence_id}.fq /app/{directory}/igv/{sequence_id}.fq", sequence_directory)
+            directory += "/igv"
+            run(f"singularity exec -B /app:/tmp /app/singularity/bwa_0_7_18 bwa mem /tmp/references/chr6.fa '/tmp/{directory}/{sequence_id}.fq' > '/app/{directory}/{sequence_id}.sam'",
+                sequence_directory)
+
+        run(f"singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools sort '/tmp/{directory}/{sequence_id}.sam' > '/app/{directory}/{sequence_id}.bam'",
+            sequence_directory)
+        run(f"singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools index '/tmp/{directory}/{sequence_id}.bam'",
+            sequence_directory)
+        set_column("COMPLETED", "igv", sequence_id)
+    except Exception as e:
+        set_column("ERROR", "igv", sequence_id)
+        raise e
+    finally:
+        set_column("IDLE", "status", sequence_id)
+
+
+def run_hla_la(directory, sequence_id):
+    # directory : uploads/user_id/sequence_id
+    set_column("RUNNING", "hla_la", sequence_id)
+    set_column("RUNNING HLA*LA", "status", sequence_id)
+
+    sequence_directory = f"/app/{directory}"
+
+    is_paired = get_column(sequence_id, "is_paired") == 1
+
+    try:
         os.makedirs(f"/app/{directory}/hla_la")
 
-        # TODO: Make the checking for if it is paired end related to the database
-        if os.path.exists(f"{directory}/zip"):
-            run(f"cp /app/{directory}/{filename}.R1.fq /app/{directory}/hla_la/{filename}.R1.fq")
-            run(f"cp /app/{directory}/{filename}.R2.fq /app/{directory}/hla_la/{filename}.R2.fq")
+        if is_paired:
+            run(f"cp /app/{directory}/{sequence_id}.R1.fq /app/{directory}/hla_la/{sequence_id}.R1.fq",
+                sequence_directory)
+            run(f"cp /app/{directory}/{sequence_id}.R2.fq /app/{directory}/hla_la/{sequence_id}.R2.fq",
+                sequence_directory)
             directory += "/hla_la"
-            run(f'singularity exec -B /app:/tmp /app/singularity/bwa_0_7_18 bwa mem /tmp/references/hg19.fasta /tmp/{directory}/{filename}.R1.fq /tmp/{directory}/{filename}.R2.fq > /app/{directory}/{filename}.sam')
-            run(f'singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools sort /tmp/{directory}/{filename}.sam > /app/{directory}/{filename}.bam')
-            run(f'singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools index /tmp/{directory}/{filename}.bam')
-            run(f"singularity exec -B /app:/tmp /app/singularity/hlala104_3.sif /usr/local/bin/HLA-LA/src/HLA-LA.pl --BAM /tmp/{directory}/{filename}.bam --workingDir /tmp/{directory} --customGraphDir /tmp/references/graphs --graph PRG_MHC_GRCh38_withIMGT --sampleID out --maxThreads 32")
+            run(f'singularity exec -B /app:/tmp /app/singularity/bwa_0_7_18 bwa mem /tmp/references/hg19.fasta /tmp/{directory}/{sequence_id}.R1.fq /tmp/{directory}/{sequence_id}.R2.fq > /app/{directory}/{sequence_id}.sam',
+                sequence_directory)
+            run(f'singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools sort /tmp/{directory}/{sequence_id}.sam > /app/{directory}/{sequence_id}.bam',
+                sequence_directory)
+            run(f'singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools index /tmp/{directory}/{sequence_id}.bam',
+                sequence_directory)
+            run(f"singularity exec -B /app:/tmp /app/singularity/hlala104_3.sif /usr/local/bin/HLA-LA/src/HLA-LA.pl --BAM /tmp/{directory}/{sequence_id}.bam --workingDir /tmp/{directory} --customGraphDir /tmp/references/graphs --graph PRG_MHC_GRCh38_withIMGT --sampleID out --maxThreads 32",
+                sequence_directory)
         else:
-            run(f"cp /app/{directory}/{filename}.fq /app/{directory}/hla_la/{filename}.fq")
+            run(f"cp /app/{directory}/{sequence_id}.fq /app/{directory}/hla_la/{sequence_id}.fq", sequence_directory)
             directory += "/hla_la"
-            run(f'singularity exec -B /app:/tmp /app/singularity/bwa_0_7_18 bwa mem /tmp/references/hg19.fasta /tmp/{directory}/{filename}.fq > /app/{directory}/{filename}.sam')
-            run(f'singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools sort /tmp/{directory}/{filename}.sam > /app/{directory}/{filename}.bam')
-            run(f'singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools index /tmp/{directory}/{filename}.bam')
-            run(f"singularity exec -B /app:/tmp /app/singularity/hlala104_3.sif /usr/local/bin/HLA-LA/src/HLA-LA.pl --BAM /tmp/{directory}/{filename}.bam --workingDir /tmp/{directory} --customGraphDir /tmp/references/graphs --graph PRG_MHC_GRCh38_withIMGT --sampleID out --maxThreads 32 --longReads ont2d")
+            run(f'singularity exec -B /app:/tmp /app/singularity/bwa_0_7_18 bwa mem /tmp/references/hg19.fasta /tmp/{directory}/{sequence_id}.fq > /app/{directory}/{sequence_id}.sam',
+                sequence_directory)
+            run(f'singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools sort /tmp/{directory}/{sequence_id}.sam > /app/{directory}/{sequence_id}.bam',
+                sequence_directory)
+            run(f'singularity exec -B /app:/tmp /app/singularity/samtools_1_20 samtools index /tmp/{directory}/{sequence_id}.bam',
+                sequence_directory)
+            run(f"singularity exec -B /app:/tmp /app/singularity/hlala104_3.sif /usr/local/bin/HLA-LA/src/HLA-LA.pl --BAM /tmp/{directory}/{sequence_id}.bam --workingDir /tmp/{directory} --customGraphDir /tmp/references/graphs --graph PRG_MHC_GRCh38_withIMGT --sampleID out --maxThreads 32 --longReads ont2d",
+                sequence_directory)
 
-        set_status_code(2, "hla_la", filename, user_id)
+        set_column("COMPLETED", "hla_la", sequence_id)
     except Exception as e:
-        set_status_code(0, "hla_la", filename, user_id)
+        set_column("ERROR", "hla_la", sequence_id)
         raise e
+    finally:
+        set_column("IDLE", "status", sequence_id)
 
 
 def get_range_of_bam_file(bam_file):
@@ -270,10 +397,6 @@ def get_range_of_bam_file(bam_file):
 
 
 def format_hla_la(path_to_output):
-    """
-    if get_status_code(label, "hla_la", user_id) != 2:  # It isn't completed
-        return None
-    """
     # format the output
     df = pd.read_csv(path_to_output, sep='\t')
     print(df.keys())

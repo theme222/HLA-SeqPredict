@@ -1,4 +1,5 @@
 /.idea
-/references/chr6.fa
+/references/*
 /uploads
 /databases
+__pycache__/*

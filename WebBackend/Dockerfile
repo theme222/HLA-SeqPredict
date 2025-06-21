@@ -1,4 +1,4 @@
-FROM python:3.11
+FROM python:3.13
 WORKDIR /app
 COPY . .
 
@@ -69,6 +69,8 @@ RUN apt-get update && apt-get install -y \
 RUN wget https://github.com/sylabs/singularity/releases/download/v4.1.4/singularity-ce_4.1.4-jammy_amd64.deb
 
 RUN apt-get install ./singularity-ce_4.1.4-jammy_amd64.deb -y
+
+RUN apt-get install sqlite3 -y
 
 # Run
 WORKDIR /app

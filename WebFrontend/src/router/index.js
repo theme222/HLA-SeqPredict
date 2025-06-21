@@ -10,6 +10,7 @@ import results from '../views/ResultsView.vue'
 import RedirectToHomePlz from '@/scripts/RedirectToHomePlz.vue'
 import PDPA from '../views/PDPA.vue'
 import search from '../views/SearchView.vue'
+import IGV from '../views/IGVView.vue'
 
 const routes = [
   {path : '/', name: 'redirectToHome', component: RedirectToHomePlz},
@@ -22,6 +23,7 @@ const routes = [
   {path : '/results', name: 'results', component: results},
   {path : '/search', name: 'search', component: search},
   {path : '/pdpa', name: 'pdpa', component: PDPA},
+  {path : '/igv', name: 'igv', component: IGV},
 ]
 
 const router = createRouter({
