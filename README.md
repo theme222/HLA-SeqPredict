@@ -14,7 +14,7 @@ This project is part of the [Satit Kaset Senior Project Program](https://academi
 
 ## Frontend Website
 
-The frontend website is can be viewed at https://ext5.nbt.or.th. This directory will contain the source code of that website.
+The frontend website can be viewed at https://ext5.nbt.or.th. This repository will contain the source code of that website.
 
 ### How it works
 
