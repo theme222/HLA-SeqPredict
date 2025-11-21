@@ -24,7 +24,7 @@ const browserOptions = {
         "fastaURL": `${backendLink}/reference/chr6.fa`,
         'indexURL': `${backendLink}/reference/chr6.fa.fai`,
     },
-    locus: 'NO_000006.12:29,940,368-29,947,527'
+    locus: 'NC_000006.12:29,940,368-29,947,527'
 };
 
 async function MakeIGVBrowser()

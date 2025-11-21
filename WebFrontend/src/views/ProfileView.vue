@@ -331,7 +331,7 @@ addToSequenceList();
 
     </div>
 
-      <div class="hidden md:grid w-2/5 h-full grid-cols-1 place-items-center bg-red-300">
+      <div class="hidden md:grid w-2/5 h-full grid-cols-1 place-items-center">
         <div class="avatar avatar-placeholder">
           <div class="bg-neutral text-neutral-content rounded-full w-64">
             <span class="text-7xl">{{accountName.toUpperCase().split(' ').map(word => word[0]).join('')}}</span>

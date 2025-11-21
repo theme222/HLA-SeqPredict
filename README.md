@@ -10,7 +10,7 @@ This repository contains 3 directories that are a part of my HLA-SeqPredict proj
 * `WebFrontend` The code for the frontend of the website. Written using the Vue.js framework.
 * `WebBackend` The code for the backend of the website. Written using the Flask framework.
 
-This project is part of the [Satit Kaset Senior Project Program](https://academic.kus.ku.ac.th/seniorproject/searchByGrade.php?command=SEARCH&txtKeyword=HLA-SeqPredict). It has been presented in the 
+This project is part of the [Satit Kaset Senior Project Program](https://academic.kus.ku.ac.th/seniorproject/searchByGrade.php?command=SEARCH&txtKeyword=HLA-SeqPredict).
 
 ## Frontend Website
 
